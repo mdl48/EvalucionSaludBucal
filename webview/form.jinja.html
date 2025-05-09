@@ -1,0 +1,727 @@
+{% macro temporomaxilar_sintomas() %}
+	<option value=0>0 - Ausencia</option>
+	<option value=1>1 - Chasquido articular</option>
+	<option value=2>2 - Dolor a la palpación muscular</option>
+	<option value=3>3 - Dificultad a la apertura y cierre</option>
+	<option value=4>4 - Dolor espontáneo articular</option>
+	<option value=5>5 - Dolor a la palpación articular</option>
+	<option value=6>6 - Dolor al movimiento</option>
+	<option value=9>9 - No registrado</option>
+{% endmacro %}
+
+{% macro temporomaxilar_signos() %}
+	<option value=1>1 - Ausencia</option>
+	<option value=2>2 - Chasquido</option>
+	<option value=3>3 - Contractura maseteriana</option>
+	<option value=4>4 - Reducción de la apertura &lt; 30 mm</option>
+	<option value=5>5 - Reducción moviemiento de lateralidad y protusión</option>
+	<option value=9>9 - No registrado</option>
+{% endmacro %}
+
+{% macro temporomaxilar_option(name, macro) %}
+<th>
+	<select name="{{name}}" required >
+		{{ macro() }}
+	</select>
+</th>
+{% endmacro %}
+
+{% macro temporomaxilar(id, n) %}
+<table>
+	<tbody>
+		<tr>
+			<td cols=2>Sintomas</td>
+			<td cols=2>Signos</td>
+		</tr>
+		<tr>
+			<th>D</th>
+			<th>I</th>
+			<th>D</th>
+			<th>I</th>
+		</tr>
+		{% for i in range(n) %}
+			{{ temporomaxilar_option(id + "_sintoma_D_" + i|string, temporomaxilar_sintomas) }}
+			{{ temporomaxilar_option(id + "_sintoma_I_" + i|string, temporomaxilar_sintomas) }}
+			{% if i == 5 %}
+				{{ temporomaxilar_option(id + "_signo_D_" + i|string, temporomaxilar_signos) }}
+				{{ temporomaxilar_option(id + "_signo_I_" + i|string, temporomaxilar_signos) }}
+			{% endif %}
+		{% endfor %}
+	</tbody>
+</table>
+{% endmacro %}
+
+{% macro intraoral_localizacion() %}
+	<option value=0>0 - Borde bermelión</option>
+	<option value=1>1 - Comisuras</option>
+	<option value=2>2 - Labios</option>
+	<option value=3>3 - Surcos</option>
+	<option value=4>4 - Mucosa bucal</option>
+	<option value=5>5 - Piso de boca</option>
+	<option value=6>6 - Lengua</option>
+	<option value=7>7 - Paladar duro y/o blando</option>
+	<option value=8>8 - Bordes alveolares</option>
+	<option value=9>9 - No registrado</option>
+{% endmacro %}
+
+{% macro intraoral_color() %}
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Azul - Violeta</option>
+	<option value=2>2 - Negro - Pardo</option>
+	<option value=3>3 - Rojo</option>
+	<option value=4>4 - Blanca</option>
+{% endmacro %}
+
+{% macro intraoral_tamaño() %}
+	<option value=0>0 - 0-2mm</option>
+	<option value=1>1 - 3-5mm</option>
+	<option value=2>2 - Mas de 5mm</option>
+{% endmacro %}
+
+{% macro intraoral_consistencia() %}
+	<option value=0>0 - Blanda</option>
+	<option value=1>1 - Dura</option>
+	<option value=2>2 - Resil</option>
+{% endmacro %}
+
+{% macro intraoral_morfologia() %}
+	<option value=0>0 - Plana</option>
+	<option value=1>1 - Elevada</option>
+	<option value=2>2 - Vesicular</option>
+	<option value=3>3 - Úlcera</option>
+{% endmacro %}
+
+{% macro intraoral_opacidades() %}
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+{% endmacro %}
+
+{% macro si_no() %}
+<option value=0 selected>0 - Si</option>
+<option value=1>1 - No</option>
+{% endmacro %}
+
+{% macro no_si() %}
+<option value=0 selected>0 - No</option>
+<option value=1>1 - Si</option>
+{% endmacro %}
+
+{% macro select3(name, content) %}
+	{% for i in range(3) %}
+		<select name="{{name}}_{{i}}" required >
+			{{ content }}
+		</select>
+	{% endfor %}
+{% endmacro %}
+{% macro select(label, name, content) %}
+<div>
+	<label for="{{name}}">{{label}}</label>
+	<select name="{{name}}" required >
+		{{ content() }}
+	</select>
+</div>
+{% endmacro %}
+{% macro higiene_select(name) %}
+	<select name="{{name}}" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+{% endmacro %}
+
+{% macro peridontico(name) %}
+<select name="{{name}}" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+{% endmacro %}
+
+{% macro fijacion(name) %}
+<select name="{{name}}" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+{% endmacro %}
+{% macro corona(name) %}
+	<select name="{{name}}" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+{% endmacro %}
+{% macro tratamiento(name) %}
+	<select name="{{name}}" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+{% endmacro %}
+
+{% macro estado_denticion(n, right) %}
+	<table class=small-select>
+		<tbody>
+			<tr>
+				{% if not right %}
+					<td colspan=3></td>
+				{% endif %}
+				{% for i in directed_loop(1, 5, not right) %}
+					<th>{{n + 4}}{{i}}</th>
+				{% endfor %}
+				{% if right %}
+					<td colspan=3></td>
+				{% endif %}
+			</tr>
+			<tr>
+				{% if not right %}
+					<!--<th></th>-->
+				{% endif %}
+				{% for i in directed_loop(1, 8, not right) %}
+					<th>{{n}}{{i}}</th>
+				{% endfor %}
+				{% if right %}
+					<!--<th></th>-->
+				{% endif %}
+			</tr>
+			{% for t in ["corona", "tratamiento"] %}
+			<tr>
+				{% if not right %}
+					<!--<th>{{ t|capitalize }}</th>-->
+				{% endif %}
+				{% for i in directed_loop(1, 8, not right) %}
+					<th>
+						{% if t == "corona" %}
+							{{ corona("corona_" + n|string + i|string) }}
+						{% else %}
+							{{ tratamiento("tratamiento_" + n|string + i|string) }}
+						{% endif %}
+					</th>
+				{% endfor %}
+				{% if right %}
+					<!--<th>{{ t|capitalize }}</th>-->
+				{% endif %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+
+{% macro erupcion_dentaria(n, right, down) %}
+	<table class=small-select>
+	{% if not down %}
+		<tr>
+			{% for i in directed_loop(1, 7, not right) %}
+				<th>{{n}}{{i}}</th>
+			{% endfor %}
+		</tr>
+	{% endif %}
+	<tr>
+		{% for i in directed_loop(1, 7, not right) %}
+		<th>
+			<select name="erupcion_dentaria_{{n}}{{i}}" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		{% endfor %}
+	</tr>
+	{% if down %}
+		<tr>
+			{% for i in directed_loop(1, 7, not right) %}
+				<th>{{n}}{{i}}</th>
+			{% endfor %}
+		</tr>
+	{% endif %}
+	</table>
+{% endmacro %}
+
+{% macro tabla_dientes_3_2(name, content, numbers) %}
+	<table id="{{name}}" class=small-select>
+		<tbody>
+			<tr>
+				<th></th> <th>17/16</th> <th>11</th> <th>26/27</th> <th></th>
+			</tr>
+			<tr>
+				<th>({{ numbers[0] }})</th>
+				{% for i in range(3) %}
+					<th>{{ content(name + "_" + i | string) }}</th>
+				{% endfor %}
+				<th>({{ numbers[1] }})</th>
+			</tr>
+			<tr>
+				<th>({{ numbers[2] }})</th>
+				{% for i in range(3) %}
+					<th>{{ content(name + "_" + (i + 3) | string) }}</th>
+				{% endfor %}
+				<th>({{ numbers[3] }})</th>
+			</tr>
+			<tr>
+				<th></th> <th>47/46</th> <th>31</th> <th>36/37</th> <th></th>
+			</tr>
+		</tbody>
+	</table>
+{% endmacro %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<form method=POST>
+	<h2>Datos del Paciente</h2>
+	<div class=options>
+		<div>
+			<label for=fecha>Fecha</label>
+			<input name=fecha type=date  required />
+		</div>
+		<div>
+			<label for=examinador>Examinador</label>
+			<input name=examinador required />
+		</div>
+		<div>
+			<label for=cedula>Cedula</label>
+			<input name=cedula type=number pattern="[1-9][0-9]+" required />
+		</div>
+		<div>
+			<label for=nombre>Nombre</label>
+			<input name=nombre  required />
+		</div>
+		<div>
+			<label for=apellido>Apellido</label>
+			<input name=apellido  required />
+		</div>
+		<div>
+			<label for=genero>Genero</label>
+			<select name=genero required >
+				<option value="1">1 - Masculino</option>
+				<option value="2">2 - Femenino</option>
+			</select>
+		</div>
+		<div>
+			<label for=edad>Edad</label>
+			<input id=edad name=edad type=number pattern="[1-9][0-9]+" required />
+		</div>
+		<div>
+			<label for=estado>Estado</label>
+			<!--TODO: Select-->
+			<input name=estado  required />
+		</div>
+		<div>
+			<label for=municipio>Municipio</label>
+			<input name=municipio  required />
+		</div>
+	</div>
+	<h2>Evaluación Extraoral</h2>
+<!--
+	<div>
+		h2 Examen Extraoral
+		<input type=checkbox name=extraoral_normal  required />
+		<input type=checkbox name=extraoral_piel_y_mucosa  required />
+		<input type=checkbox name=extraoral_nodulos_agrandados  required />
+		<input type=checkbox name=extraoral_asimetria_facial  required />
+		<input type=checkbox name=extraoral_no_registrado  required />
+	</div>
+-->
+	<h3>Evaluación de la Articulación Temporomaxilar</h3>
+	<div class=options>
+		<div>
+			<label for="temporomaxilar_sintoma">Sintomas</label>
+			<select name="temporomaxilar_sintoma" required >
+				{{ temporomaxilar_sintomas() }}
+			</select>
+		</div>
+		<div>
+			<label for="temporomaxilar_signo">Signos</label>
+			<select name="temporomaxilar_signo" required >
+				{{ temporomaxilar_signos() }}
+			</select>
+		</div>
+		
+	</div>
+	<h2>Evaluación Intraoral</h2>
+	<h3>Lesion</h3>
+	<div class=options>
+		<script>
+			function disable_lesion(e) {
+				if (e.target.value != "2") {
+					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+						e.removeAttribute("disabled")
+					return;
+				}
+				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+					e.setAttribute("disabled", "true")
+			}
+		</script>
+		<div>
+		<label for=intraoral_lesion>Hay Lesion</label>
+			<select name=intraoral_lesion onchange="disable_lesion(event)" required >
+				<option value=1>1 - Si</option>
+				<option value=2 selected=true>2 - No</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+		{{ select("Localización", "intraoral_lesion_localizacion", intraoral_localizacion) }}
+		{{ select("Dolor", "intraoral_lesion_dolor", si_no) }}
+		{{ select("Color", "intraoral_lesion_color", intraoral_color) }}
+		{{ select("Tamaño", "intraoral_lesion_tamaño", intraoral_tamaño) }}
+		{{ select("Consistencia", "intraoral_lesion_consistencia", intraoral_consistencia) }}
+		{{ select("Morfologia", "intraoral_lesion_morfologia", intraoral_morfologia) }}
+		<div>
+			<label for=intraoral_lesion_numero>Numero de Lesiones</label>
+			<select name=intraoral_lesion_numero required >
+				<option value=0>0 - Unica</option>
+				<option value=1>1 - Multiples lesiones con iguales caracteristicas</option>
+				<option value=2>2 - Multiples lesiones con diferentes caracteristicas</option>
+			</select>
+		</div>
+		<script>
+			for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+				e.setAttribute("disabled", "true")
+		</script>
+
+	</div>
+	<div class=separator style=background-color:black></div>
+	
+	<h3>Flurosis Dental</h3>
+	<select name=intraoral_flurosis required >
+		<option value=0>0 - Normal</option>
+		<option value=1>1 - Dudosa</option>
+		<option value=2>2 - Muy leve</option>
+		<option value=3>3 - Leve</option>
+		<option value=4>4 - Moderada</option>
+		<option value=5>5 - Severa</option>
+		<option value=8>8 - Excluido</option>
+		<option value=9>9 - No registrado</option>
+	</select>
+	<div class=separator style=background-color:black></div>
+	
+<!--
+	<table>
+		<tbody>
+			{% set dientes = [14, 13, 12, 11, 21, 22, 23, 24] %}
+			<tr>
+			{% for d in dientes %}
+				<th>{{d}}</th>
+			{% endfor %}
+			</tr>
+			<tr>
+			{% for d in dientes %}
+				<select name=intraoral_opacidades_{{d}} required >
+					{{ intraoral_opacidades() }}
+				</select>
+			{% endfor %}
+			</tr>
+			<tr>
+				<th>
+					<select name=intraoral_opacidades_46 required >
+						{{ intraoral_opacidades() }}
+					</select>
+				</th>
+				<td cols=6></td>
+				<th>
+					<select name=intraoral_opacidades_36 required >
+						{{ intraoral_opacidades() }}
+					</select>
+				</th>
+			</tr>
+			<tr>
+				<th>46</th>
+				<td cols=6></td>
+				<th>36</th>
+			</tr>
+		</tbody>
+	</table>
+-->
+	<h3>Indice de Higiene Bucal Simplificado (IHB-S)</h3>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	<table id=higiene class=small-select>
+		<thead>
+			<th>Diente</th>
+			{% set higienes = ["16V", "11V", "26V", "36L", "31V", "46L"] %}
+			{% for h in higienes %}
+			<th>{{h}}</th>
+			{% endfor %}
+		</thead>
+		<tbody>
+		{% for d in ["placa", "calculo"] %}
+			<tr>
+				<th>{{ d|capitalize }}</th>
+				{% for h in higienes %}
+					<th>{{ higiene_select(d + "_" + h) }}</th>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+	<div class=separator style=background-color:black></div>
+	<h3>Indice Periodontal de la Comunidad (IPC)</h3>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	{{ tabla_dientes_3_2("peridontico", peridontico, [54, 56, 57, 59]) }}
+	<div class=separator style=background-color:black></div>
+	<h3>Perdida de Fijación</h3>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	{{ tabla_dientes_3_2("fijacion", fijacion, [60, 62, 63, 65]) }}
+
+	<div class=separator style=background-color:black></div>
+	<h3>Estado de la Dentición y Tratamiento Necesario</h3>
+	<div style=display:flex;gap:0>
+		{{ estado_denticion(1, false) }}
+		{{ estado_denticion(2, true) }}
+	</div>
+	<div style=display:flex;gap:0>
+		{{ estado_denticion(4, false) }}
+		{{ estado_denticion(3, true) }}
+	</div>
+
+	
+	<div class=separator style=background-color:black></div>
+	<h3>Erupción Dentaria</h3>
+	<span class=note>(5 a 18 años)</span>
+	<div id=erupcion>
+		<div style=display:flex;gap:0>
+			{{ erupcion_dentaria(1, false, false) }}
+			{{ erupcion_dentaria(2, true, false) }}
+		</div>
+		<div style=display:flex;gap:0>
+			{{ erupcion_dentaria(4, false, true) }}
+			{{ erupcion_dentaria(3, true, true) }}
+		</div>
+	</div>
+	<div class=separator style=background-color:black></div>
+	<h3>Necesidad de Prótesis</h3>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	<div class=options>
+	{% for t in ["superior", "inferior"] %}
+		<!-- >= 15 años -->
+		<div>
+			<label for="protesis_necesidad_{{t}}">{{t|capitalize}}</label>
+			<select name="protesis_necesidad_{{t}}" required >
+				<option value=0>0 - No necesita</option>
+				<option value=1>1 - Necesita y no tiene</option>
+				<option value=2>2 - Tiene adecuada</option>
+				<option value=3>3 - Tiene inadecuada</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	{% endfor %}
+	</div>
+	
+	<div class=separator style=background-color:black></div>
+	<h3>Tipo de Prótesis</h3>
+	<div class=options>
+	{% for t in ["superior", "inferior"] %}
+		<div>
+			<label for="protesis_tipo_{{t}}">{{t|capitalize}}</label>
+			<select name="protesis_tipo_{{t}}" required >
+				<option value=0>0 - No posee</option>
+				<option value=1>1 - Prótesis parcial removible</option>
+				<option value=2>2 - Prótesis Total</option>
+				<option value=3>3 - Prótesis fija</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	{% endfor %}
+	</div>
+
+	<div class=separator style=background-color:black></div>
+	<!--TODO: JS for disable when ninguno-->
+	<h3>Habitos</h3>
+	<div class=options>
+		<div>
+			<label for=habitos_ninguno>Ninguno</label>
+			<input type=checkbox name=habitos_ninguno  required />
+		</div>
+		<div>
+			<label for=habitos_bruxismo>Bruxismo</label>
+			<input type=checkbox name=habitos_bruxismo  required />
+		</div>
+		<div>
+			<label for=habitos_respiracion_bucal>Respiración Bucal</label>
+			<input type=checkbox name=habitos_respiracion_bucal  required />
+		</div>
+		<div>
+			<label for=habitos_deglucion_atipica>Deglución Atipica</label>
+			<input type=checkbox name=habitos_deglucion_atipica  required />
+		</div>
+		<div>
+			<label for=habitos_succion_digital>Succión Digital</label>
+			<input type=checkbox name=habitos_succion_digital  required />
+		</div>
+		<div>
+			<label for=habitos_no_registrado>No Registrado</label>
+			<input type=checkbox name=habitos_no_registrado  required />
+		</div>
+	</div>
+
+	<div class=separator style=background-color:black></div>
+	<div class=options>
+		<div>
+			<label for="relacion_oclusion_2dos_molares">Relación de Oclusión de 2dos Molares Primarios</label>
+			<select name="relacion_oclusion_2dos_molares" required >
+				<option value=0>0 - Plano terminal recto</option>
+				<option value=1>1 - Escalón dental</option>
+				<option value=2>2 - Escalón mesial</option>
+				<option value=3>3 - PT Recto - E mesial</option>
+				<option value=4>4 - PT Recto - E distal</option>
+				<option value=5>5 - Escalón distal - Escalón mesial</option>
+				<option value=9>9 - No Aplicable</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="relacion_oclusion_1ros_molares">Relación de Oclusión de 1ros Molares Permanentes</label>
+			<select name="relacion_oclusion_1ros_molares" required >
+				<option value=0>0 - Clase I</option>
+				<option value=1>1 - Clase II</option>
+				<option value=2>2 - Clase III</option>
+				<option value=9>9 - No Aplicable</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="apiñamiento">Apiñamiento</label>
+			<select name="apiñamiento" required >
+				<option value=0>0 - No hay arcos apiñados</option>
+				<option value=1>1 - Un arco apiñado</option>
+				<option value=2>2 - Dos arcos apiñados</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="espaciamiento">Espaciamiento</label>
+			<select name="espaciamiento" required >
+				<option value=0>0 - No hay arcos espaciados</option>
+				<option value=1>1 - Un arco espaciado</option>
+				<option value=2>2 - Dos arcos espaciados</option>
+			</select>
+		</div>
+
+		{% for x in ["diastema", "mordida_abierta", "morida_profunda_anterior", "morida_tope_a_tope"] %}
+			<div>
+				<label for="{{x}}">{{ x.replace("_", " ")|capitalize }}</label>
+				<select name="{{x}}" required >
+					{{ no_si() }}
+				</select>
+			</div>
+		{% endfor %}
+
+		<div>
+			<label for=mordida_cruzada>Mordida Cruzada</label>
+			<select name=mordida_cruzada required >
+				<option value="1">1 - Sin alteración</option>
+				<option value="2">2 - Mordida cruzada anterior</option>
+				<option value="3">3 - Mordida cruzada posterior unilateral</option>
+				<option value="4">4 - Mordida cruzada posterior bilateral</option>
+				<option value="5">5 - Mordida cruzada anterior posterior (ambas)</option>
+			</select>
+		</div>
+	</div>
+	
+	<h2>Necesidad Inmediata de Asistencia y Consulta</h2>
+	<div class=options>
+	{% set necesidades = {"trastorno": "Trastorno que amenaza la vida", "dolor": "Dolor o infección"} %}
+	{% for x in necesidades %}
+		<div>
+			<label for="necesidad_asistencia_{{x}}">{{necesidades[x]}}</label>
+			<select name="necesidad_asistencia_{{x}}" required >
+				<option value=1>1 - Ninguno</option>
+				<option value=2>2 - Presenta</option>
+				<option value=3>3 - No registrado</option>
+			</select>
+		</div>
+	{% endfor %}
+	</div>
+	<input type=submit value="Enviar" />
+</form>
+<script>
+	age_ranges = [
+		{query: 'table[id="higiene"] select', min: 5},
+		{query: 'table[id="peridontico"] select', min: 15},
+		{query: 'table[id="fijacion"] select', min: 15},
+		{query: '[id="erupcion"] select', min: 5, max: 18},
+		{query: '[name^="protesis_necesidad_"]', min: 15},
+	]
+	for (let r of age_ranges)
+		for (let e of document.querySelectorAll(r.query))
+			e.setAttribute("disabled", "true")
+	document.getElementById("edad").addEventListener("change", (e) => {
+		for (let range of age_ranges) {
+			if (
+				(range.hasOwnProperty("min") && e.target.value < range.min)
+				||
+				(range.hasOwnProperty("max") && e.target.value > range.max)
+			) {
+				for (let e of document.querySelectorAll(range.query))
+					e.setAttribute("disabled", "true")
+				continue
+			}
+			for (let e of document.querySelectorAll(range.query))
+				e.removeAttribute("disabled")
+		}
+	})
+
+	if (Android) {
+		for (let form of document.findElementsByTag("form")) {
+			form.onsubmit = (e) => {
+				e.preventDefault()
+				const data = FormData(this)
+				let obj = {}
+				for (let v in data)
+					obj[v[0]] = v[1]
+				Android.post(obj)
+			}
+		}
+	}
+</script>
+	
+</body>
+</html>
