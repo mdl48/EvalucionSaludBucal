@@ -708,20 +708,7 @@
 				e.removeAttribute("disabled")
 		}
 	})
-
-	if (Android) {
-		for (let form of document.findElementsByTag("form")) {
-			form.onsubmit = (e) => {
-				e.preventDefault()
-				const data = FormData(this)
-				let obj = {}
-				for (let v in data)
-					obj[v[0]] = v[1]
-				Android.post(obj)
-			}
-		}
-	}
 </script>
-	
+<script type="text/javascript" src="post.js"></script>
 </body>
 </html>

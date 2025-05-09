@@ -164,3 +164,4 @@ create table usuarios(
 	password text
 );
 
+insert into usuarios values(28715209, 'Luis Dubuc', '005a36784a0ea769daf5ccfae4e48a2b8f6445eb');

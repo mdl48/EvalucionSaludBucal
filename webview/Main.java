@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Context; 
 import android.util.Log;
 
+import android.widget.Toast;
+
 import android.webkit.*;
 import android.database.sqlite.*;
 import android.content.ContentValues;
@@ -22,8 +24,12 @@ import java.security.NoSuchAlgorithmException;
 
 class Handler {
 	SQLiteDatabase db;
-	public Handler(SQLiteDatabase db) {
+	WebView web;
+	Activity activity;
+	public Handler(Activity activity, WebView web, SQLiteDatabase db) {
 		this.db = db;
+		this.web = web;
+		this.activity = activity;
 	}
 	public static String sha1(String input) {
 		try {
@@ -38,7 +44,10 @@ class Handler {
 			return null;
 		}
 	}
-	
+	@JavascriptInterface
+	public void log(String msg) {
+		Log.d("webview", msg);
+	}
 	@JavascriptInterface
 	public void post(String method, String json) {
 		HashMap<String, String> form = null;
@@ -54,6 +63,8 @@ class Handler {
 			e.printStackTrace();
 			return;
 		}
+		Log.i("webview", "[POST] Got method: " + method);
+		Log.i("webview", "[POST] Got form: " + form.toString());
 		
 		if (method == "form") {
 			ContentValues vals = new ContentValues();
@@ -62,11 +73,12 @@ class Handler {
 			db.insert("formularios", null, vals);
 		}
 		else if(method == "login") {
-			Cursor cursor = this.db.rawQuery("select name from usuarios where name = ? and password = ?", new String[] {form.get("name"), sha1(form.get("password"))});
-			if (cursor.getCount() != 0) {
-				// Load form page
-			}
+			Log.i("webview", "[POST] Login start");
+			Cursor cursor = this.db.rawQuery("select cedula from usuarios where cedula = ? and password = ?", new String[] {form.get("name"), sha1(form.get("password"))});
+			if (cursor.getCount() != 0)
+				web.loadUrl("file://android_asset/form.html");
 			else {
+				activity.runOnUiThread(() -> Toast.makeText(activity, "La cedula o claves son incorrectas.", Toast.LENGTH_LONG).show());
 				// Show error
 			}
 		}
@@ -95,9 +107,10 @@ public class Main extends Activity {
 				OutputStream dbfile_stream = new FileOutputStream(dbfile);
 				Copy(dbasset, dbfile_stream);
 			} catch (IOException io) {
-				// Ignore
+				Log.e("webview", "Fatal. Could not copy to " + dbfile.getPath());
 			}
 		}
+		Log.i("webview", "Opening Database on " + dbfile.getPath());
 		db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
 		// if (internet 1s) {
 		// 	db.delete("usuarios", ); // TODO:
@@ -112,7 +125,7 @@ public class Main extends Activity {
 		WebSettings cfg = web.getSettings();
 		cfg.setJavaScriptEnabled(true);
 		cfg.setDomStorageEnabled(true);
-		web.addJavascriptInterface(new Handler(db), "Android");
+		web.addJavascriptInterface(new Handler(this, web, db), "Android");
 		web.setWebChromeClient(new WebChromeClient());
 		web.loadUrl("file:///android_asset/login.html");
 	}
