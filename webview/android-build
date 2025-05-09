@@ -1,0 +1,190 @@
+#!/bin/sh
+IFS='	
+'
+set -xeu
+
+# Change . to $PROJECT_DIR
+
+PROJECT_DIR=$PWD
+dir=$PROJECT_DIR
+while test "$dir" != "$HOME"; do
+	if test -e "$dir/AndroidManifest.xml"; then
+		PROJECT_DIR=$dir
+		break;
+	fi
+	dir=${dir%/*}
+done
+
+SDK=${SDK:-$ANDROID_HOME}
+TARGETAPI=${TARGETAPI:-}
+MINAPI=${MINAPI:-18}
+
+filter_platform() {
+	tmp=${1#$SDK/platforms/android-}
+	echo "${tmp%/}"
+}
+
+find_max_dir() {
+	max=0
+	filter=$2
+	for dir in $(find $1 -maxdepth 1 -type d -path "$1/*" -prune); do
+		val=$($filter $dir)
+		if test $val -gt $max; then max=$val; fi
+	done
+	echo $max
+}
+
+set_platform() {
+	# If target is not set or target plaform is not installed find max platform
+	if test -z "$TARGETAPI"; then
+		TARGETAPI=$(find_max_dir $SDK/platforms filter_platform)
+		if test $TARGETAPI -eq 0; then exit 1; fi
+	elif test ! -d $SDK/platforms/android-$TARGETAPI; then
+		exit 1
+	fi
+	
+	PLATFORM=$SDK/platforms/android-$TARGETAPI
+	ANDROID_JAR=$PLATFORM/android.jar
+}
+
+set_package() {
+	# If appname is not set, set it to the project dirname
+	if test -z "${APPNAME:-}"; then
+		APPNAME=$(echo "${PROJECT_DIR##*/}" | sed s/-/_/g)
+	fi
+	PACKAGE=${PACKAGE:-app.$APPNAME}
+	PACKAGE_PATH=$(echo $PACKAGE | sed -e "s|\.|/|g")
+	ENTRY=${ENTRY:-Main}
+}
+
+set_files_and_dirs() {
+	SRCDIR=${SRCDIR:-$PROJECT_DIR/src/$PACKAGE_PATH}
+	if test ! -d $SRCDIR; then 
+		SRCDIR=.
+		SRC_FIND_DEPTH="-maxdepth	1"
+	else 
+		SRC_FIND_DEPTH=
+	fi
+	
+	RESDIR=${RESDIR:-.}
+	OBJDIR=${OBJDIR:-obj}
+	if test ! -d "$OBJDIR"; then mkdir -p "$OBJDIR"; fi
+	ASSETSDIR=${ASSETSDIR:-$PROJECT_DIR/assets}
+	ICON=${ICON:-}
+	MANIFEST=${MANIFEST:-$PROJECT_DIR/AndroidManifest.xml}
+	KEYSTORE=${KEYSTORE:-android.keystore}
+	KEYSTORE_ALIAS=${KEYSTORE_ALIAS:-cert}
+	KEYSTORE_PASS=${KEYSTORE_PASS:-password}
+	KEYSTORE_NAME=${KEYSTORE_NAME:-"CN=johnsmith.com, OU=ID, O=JohnSmith, L=Smith, S=John, C=GB"}
+}
+
+generate_manifest() {
+	if test -f $MANIFEST; then return; fi
+	sed -e s/PACKAGE/$PACKAGE/ \
+	-e s/ACTIVITY_ENTRY_NAME/.$ENTRY/ \
+	-e s/ICON/$ICON/ \
+	-e s:@string/app_name:$APPNAME: \
+	$PLATFORM/templates/AndroidManifest.template > $MANIFEST
+}
+
+find_sources() {
+	find $SRCDIR $SRC_FIND_DEPTH -type f -name "*.java" | while read -r file; do
+		class_file=$OBJDIR/$PACKAGE_PATH/${file%.*}.class
+		if test ! -f "$class_file" || test "$file" -nt "$class_file"; then 
+			echo "$file"
+		fi
+	done
+}
+
+compile_sources() {
+	if test "$OBJDIR" != . -a ! -d "$OBJDIR"; then mkdir -p $OBJDIR; fi
+	srcs=$(find_sources)
+	if test -z "$srcs"; then return; fi
+	(unset IFS; ${JAVA_HOME:-}javac $JAVA_CFLAGS -cp "$ANDROID_JAR" -d "$OBJDIR" $srcs)
+	# TODO: Maybe we should just look for the ones that match $src*.class
+	d8 --classpath "$ANDROID_JAR" --min-api $MINAPI $(find "$OBJDIR" -type f -name "*.class")
+	mv classes.dex $OBJDIR || true
+}
+
+compile_resources() {
+	files=$(find $RESDIR -type f -name "*.xml" -and -not -name "AndroidManifest.xml")
+	if test -z "$files"; then return; fi
+	aapt2 compile $files -o "$OBJDIR/res.zip"
+	aapt2 link --manifest $MANIFEST -I $ANDROID_JAR \
+		--target-sdk-version $TARGETAPI \
+		--min-sdk-version $MINAPI \
+		-R "$OBJDIR/res.zip" \
+		--java "$SRCDIR" \
+		-o res.apk
+	rm res.apk
+	if test "$SRCDIR" = .; then mv "$PACKAGE_PATH/R.java" .; fi
+	
+}
+
+generate_keystore() {
+	if test -f $KEYSTORE; then return; fi
+	keytool -genkey -v -keystore $KEYSTORE -alias $KEYSTORE_ALIAS -keypass $KEYSTORE_PASS -storepass $KEYSTORE_PASS -dname $KEYSTORE_NAME -keyalg RSA -keysize 2048 -validity 10000
+}
+
+resources_arg() {
+	if test -e "$OBJDIR/res.zip"; then
+		echo "-R	$OBJDIR/res.zip"
+	fi
+}
+
+make_apk() {
+	if test -f $APPNAME.apk && test $APPNAME.apk -nt $OBJDIR/classes.dex; then return; fi
+	rm $APPNAME.apk || true
+	
+	aapt2 link -o tmp.apk -I $ANDROID_JAR --manifest $MANIFEST \
+	--target-sdk-version $TARGETAPI \
+	--min-sdk-version $MINAPI \
+	$(resources_arg)
+	
+	mv $OBJDIR/classes.dex classes.dex || true
+	zip tmp.apk classes.dex
+	if test -d $ASSETSDIR; then zip tmp.apk -r ${ASSETSDIR##${PWD}/}; fi
+	zipalign -v 4 tmp.apk $APPNAME.apk
+	rm tmp.apk
+	mv classes.dex $OBJDIR/classes.dex || true
+}
+
+sign() {
+	generate_keystore
+	apksigner sign --ks $KEYSTORE --ks-pass "pass:$KEYSTORE_PASS" $APPNAME.apk
+}
+build() {
+	generate_manifest
+	compile_resources
+	compile_sources
+	make_apk
+	sign
+}
+install() {
+	build
+	adb install $APPNAME.apk
+}
+
+set_platform
+set_package
+set_files_and_dirs
+JAVA_CFLAGS=${JAVA_CFLAGS:-"--release 8 -Xlint:-options"}
+JAVA_HOME=${JAVA_HOME:-}
+DEFAULT_JAVA='/usr/lib/jvm/java-11-openjdk/bin/'
+if test -z "$JAVA_HOME" -a -d $DEFAULT_JAVA; then
+	JAVA_HOME=$DEFAULT_JAVA
+fi
+
+if test $# -eq 0; then build; exit 0; fi
+case "$1" in
+	build) build;;
+	install) install;;
+	clean)
+		if test $OBJDIR != .; then rm -r "$OBJDIR"; fi
+		rm $APPNAME.apk || true
+	;;
+	run)
+		install
+		adb shell am start -n "$PACKAGE/$PACKAGE.$ENTRY"
+	;;
+esac
