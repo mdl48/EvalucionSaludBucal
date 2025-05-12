@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css"/>
+</head>
+<body id=welcome>
+	<h1 style=align-self:stretch;text-align:center>Bienvenido</h1>
+	<h2 content=name></h2>
+	<h2>Sistema de Evaluación de Salud Bucal</h2>
+	
+	<div>
+		<a href="form.html">Formulario</a>
+		<button onclick="Android.export()">Exportar Datos</button>
+		<a href="login.html">Cerrar Sesión</a>
+	</div>
+	<p>Tiene <span content=count></span> Registros por Exportar</p>
+	<script>[...document.querySelectorAll("[content]")].forEach(x => x.textContent = Android.getvar(x.getAttribute("content")))</script>
+</body>

@@ -310,22 +310,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="initial-scale=1">
+	<meta name="viewport" content="initial-scale=1, width=device-width">
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <form method=POST>
-	<h2>Datos del Paciente</h2>
+	<h1>Datos del Paciente</h1>
 	<div class=options>
-		<div>
-			<label for=fecha>Fecha</label>
-			<input name=fecha type=date  required />
-		</div>
-		<div>
-			<label for=examinador>Examinador</label>
-			<input name=examinador required />
-		</div>
 		<div>
 			<label for=cedula>Cedula</label>
 			<input name=cedula type=number pattern="[1-9][0-9]+" required />
@@ -359,10 +351,10 @@
 			<input name=municipio  required />
 		</div>
 	</div>
-	<h2>Evaluación Extraoral</h2>
+	<h1>Evaluación Extraoral</h1>
 <!--
 	<div>
-		h2 Examen Extraoral
+		h1 Examen Extraoral
 		<input type=checkbox name=extraoral_normal  required />
 		<input type=checkbox name=extraoral_piel_y_mucosa  required />
 		<input type=checkbox name=extraoral_nodulos_agrandados  required />
@@ -370,7 +362,7 @@
 		<input type=checkbox name=extraoral_no_registrado  required />
 	</div>
 -->
-	<h3>Evaluación de la Articulación Temporomaxilar</h3>
+	<h2>Evaluación de la Articulación Temporomaxilar</h2>
 	<div class=options>
 		<div>
 			<label for="temporomaxilar_sintoma">Sintomas</label>
@@ -386,18 +378,18 @@
 		</div>
 		
 	</div>
-	<h2>Evaluación Intraoral</h2>
-	<h3>Lesion</h3>
+	<h1>Evaluación Intraoral</h1>
+	<h2>Lesion</h2>
 	<div class=options>
 		<script>
 			function disable_lesion(e) {
 				if (e.target.value != "2") {
 					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-						e.removeAttribute("disabled")
+						e.style.removeProperty("display")
 					return;
 				}
 				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-					e.setAttribute("disabled", "true")
+					e.style.display = "none"
 			}
 		</script>
 		<div>
@@ -428,9 +420,9 @@
 		</script>
 
 	</div>
-	<div class=separator style=background-color:black></div>
 	
-	<h3>Flurosis Dental</h3>
+	<div class=separator style=background-color:black></div>
+	<h2>Flurosis Dental</h2>
 	<select name=intraoral_flurosis required >
 		<option value=0>0 - Normal</option>
 		<option value=1>1 - Dudosa</option>
@@ -441,7 +433,6 @@
 		<option value=8>8 - Excluido</option>
 		<option value=9>9 - No registrado</option>
 	</select>
-	<div class=separator style=background-color:black></div>
 	
 <!--
 	<table>
@@ -480,7 +471,8 @@
 		</tbody>
 	</table>
 -->
-	<h3>Indice de Higiene Bucal Simplificado (IHB-S)</h3>
+	<div class=separator style=background-color:black></div>
+	<h2>Indice de Higiene Bucal Simplificado (IHB-S)</h2>
 	<span class=note>(a partir de los 15 años de edad)</span>
 	<table id=higiene class=small-select>
 		<thead>
@@ -503,16 +495,16 @@
 	</table>
 
 	<div class=separator style=background-color:black></div>
-	<h3>Indice Periodontal de la Comunidad (IPC)</h3>
+	<h2>Indice Periodontal de la Comunidad (IPC)</h2>
 	<span class=note>(a partir de los 15 años de edad)</span>
 	{{ tabla_dientes_3_2("peridontico", peridontico, [54, 56, 57, 59]) }}
 	<div class=separator style=background-color:black></div>
-	<h3>Perdida de Fijación</h3>
+	<h2>Perdida de Fijación</h2>
 	<span class=note>(a partir de los 15 años de edad)</span>
 	{{ tabla_dientes_3_2("fijacion", fijacion, [60, 62, 63, 65]) }}
 
 	<div class=separator style=background-color:black></div>
-	<h3>Estado de la Dentición y Tratamiento Necesario</h3>
+	<h2>Estado de la Dentición y Tratamiento Necesario</h2>
 	<div style=display:flex;gap:0>
 		{{ estado_denticion(1, false) }}
 		{{ estado_denticion(2, true) }}
@@ -524,7 +516,7 @@
 
 	
 	<div class=separator style=background-color:black></div>
-	<h3>Erupción Dentaria</h3>
+	<h2>Erupción Dentaria</h2>
 	<span class=note>(5 a 18 años)</span>
 	<div id=erupcion>
 		<div style=display:flex;gap:0>
@@ -537,7 +529,7 @@
 		</div>
 	</div>
 	<div class=separator style=background-color:black></div>
-	<h3>Necesidad de Prótesis</h3>
+	<h2>Necesidad de Prótesis</h2>
 	<span class=note>(a partir de los 15 años de edad)</span>
 	<div class=options>
 	{% for t in ["superior", "inferior"] %}
@@ -556,7 +548,7 @@
 	</div>
 	
 	<div class=separator style=background-color:black></div>
-	<h3>Tipo de Prótesis</h3>
+	<h2>Tipo de Prótesis</h2>
 	<div class=options>
 	{% for t in ["superior", "inferior"] %}
 		<div>
@@ -574,7 +566,7 @@
 
 	<div class=separator style=background-color:black></div>
 	<!--TODO: JS for disable when ninguno-->
-	<h3>Habitos</h3>
+	<h2>Habitos</h2>
 	<div class=options>
 		<div>
 			<label for=habitos_ninguno>Ninguno</label>
@@ -666,7 +658,7 @@
 		</div>
 	</div>
 	
-	<h2>Necesidad Inmediata de Asistencia y Consulta</h2>
+	<h1>Necesidad Inmediata de Asistencia y Consulta</h1>
 	<div class=options>
 	{% set necesidades = {"trastorno": "Trastorno que amenaza la vida", "dolor": "Dolor o infección"} %}
 	{% for x in necesidades %}
