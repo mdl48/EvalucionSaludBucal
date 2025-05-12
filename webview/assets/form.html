@@ -1,0 +1,3189 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1, width=device-width">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<form method=POST>
+	<h1>Datos del Paciente</h1>
+	<div class=options>
+		<div>
+			<label for=cedula>Cedula</label>
+			<input name=cedula type=number pattern="[1-9][0-9]+" required />
+		</div>
+		<div>
+			<label for=nombre>Nombre</label>
+			<input name=nombre  required />
+		</div>
+		<div>
+			<label for=apellido>Apellido</label>
+			<input name=apellido  required />
+		</div>
+		<div>
+			<label for=genero>Genero</label>
+			<select name=genero required >
+				<option value="1">1 - Masculino</option>
+				<option value="2">2 - Femenino</option>
+			</select>
+		</div>
+		<div>
+			<label for=edad>Edad</label>
+			<input id=edad name=edad type=number pattern="[1-9][0-9]+" required />
+		</div>
+		<div>
+			<label for=estado>Estado</label>
+			<!--TODO: Select-->
+			<input name=estado  required />
+		</div>
+		<div>
+			<label for=municipio>Municipio</label>
+			<input name=municipio  required />
+		</div>
+	</div>
+	<h1>Evaluación Extraoral</h1>
+<!--
+	<div>
+		h1 Examen Extraoral
+		<input type=checkbox name=extraoral_normal  required />
+		<input type=checkbox name=extraoral_piel_y_mucosa  required />
+		<input type=checkbox name=extraoral_nodulos_agrandados  required />
+		<input type=checkbox name=extraoral_asimetria_facial  required />
+		<input type=checkbox name=extraoral_no_registrado  required />
+	</div>
+-->
+	<h2>Evaluación de la Articulación Temporomaxilar</h2>
+	<div class=options>
+		<div>
+			<label for="temporomaxilar_sintoma">Sintomas</label>
+			<select name="temporomaxilar_sintoma" required >
+				
+	<option value=0>0 - Ausencia</option>
+	<option value=1>1 - Chasquido articular</option>
+	<option value=2>2 - Dolor a la palpación muscular</option>
+	<option value=3>3 - Dificultad a la apertura y cierre</option>
+	<option value=4>4 - Dolor espontáneo articular</option>
+	<option value=5>5 - Dolor a la palpación articular</option>
+	<option value=6>6 - Dolor al movimiento</option>
+	<option value=9>9 - No registrado</option>
+
+			</select>
+		</div>
+		<div>
+			<label for="temporomaxilar_signo">Signos</label>
+			<select name="temporomaxilar_signo" required >
+				
+	<option value=1>1 - Ausencia</option>
+	<option value=2>2 - Chasquido</option>
+	<option value=3>3 - Contractura maseteriana</option>
+	<option value=4>4 - Reducción de la apertura &lt; 30 mm</option>
+	<option value=5>5 - Reducción moviemiento de lateralidad y protusión</option>
+	<option value=9>9 - No registrado</option>
+
+			</select>
+		</div>
+		
+	</div>
+	<h1>Evaluación Intraoral</h1>
+	<h2>Lesion</h2>
+	<div class=options>
+		<script>
+			function disable_lesion(e) {
+				if (e.target.value != "2") {
+					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+						e.style.removeProperty("display")
+					return;
+				}
+				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+					e.style.display = "none"
+			}
+		</script>
+		<div>
+		<label for=intraoral_lesion>Hay Lesion</label>
+			<select name=intraoral_lesion onchange="disable_lesion(event)" required >
+				<option value=1>1 - Si</option>
+				<option value=2 selected=true>2 - No</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+		
+<div>
+	<label for="intraoral_lesion_localizacion">Localización</label>
+	<select name="intraoral_lesion_localizacion" required >
+		
+	<option value=0>0 - Borde bermelión</option>
+	<option value=1>1 - Comisuras</option>
+	<option value=2>2 - Labios</option>
+	<option value=3>3 - Surcos</option>
+	<option value=4>4 - Mucosa bucal</option>
+	<option value=5>5 - Piso de boca</option>
+	<option value=6>6 - Lengua</option>
+	<option value=7>7 - Paladar duro y/o blando</option>
+	<option value=8>8 - Bordes alveolares</option>
+	<option value=9>9 - No registrado</option>
+
+	</select>
+</div>
+
+		
+<div>
+	<label for="intraoral_lesion_dolor">Dolor</label>
+	<select name="intraoral_lesion_dolor" required >
+		
+<option value=0 selected>0 - Si</option>
+<option value=1>1 - No</option>
+
+	</select>
+</div>
+
+		
+<div>
+	<label for="intraoral_lesion_color">Color</label>
+	<select name="intraoral_lesion_color" required >
+		
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Azul - Violeta</option>
+	<option value=2>2 - Negro - Pardo</option>
+	<option value=3>3 - Rojo</option>
+	<option value=4>4 - Blanca</option>
+
+	</select>
+</div>
+
+		
+<div>
+	<label for="intraoral_lesion_tamaño">Tamaño</label>
+	<select name="intraoral_lesion_tamaño" required >
+		
+	<option value=0>0 - 0-2mm</option>
+	<option value=1>1 - 3-5mm</option>
+	<option value=2>2 - Mas de 5mm</option>
+
+	</select>
+</div>
+
+		
+<div>
+	<label for="intraoral_lesion_consistencia">Consistencia</label>
+	<select name="intraoral_lesion_consistencia" required >
+		
+	<option value=0>0 - Blanda</option>
+	<option value=1>1 - Dura</option>
+	<option value=2>2 - Resil</option>
+
+	</select>
+</div>
+
+		
+<div>
+	<label for="intraoral_lesion_morfologia">Morfologia</label>
+	<select name="intraoral_lesion_morfologia" required >
+		
+	<option value=0>0 - Plana</option>
+	<option value=1>1 - Elevada</option>
+	<option value=2>2 - Vesicular</option>
+	<option value=3>3 - Úlcera</option>
+
+	</select>
+</div>
+
+		<div>
+			<label for=intraoral_lesion_numero>Numero de Lesiones</label>
+			<select name=intraoral_lesion_numero required >
+				<option value=0>0 - Unica</option>
+				<option value=1>1 - Multiples lesiones con iguales caracteristicas</option>
+				<option value=2>2 - Multiples lesiones con diferentes caracteristicas</option>
+			</select>
+		</div>
+		<script>
+			for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
+				e.setAttribute("disabled", "true")
+		</script>
+
+	</div>
+	
+	<div class=separator style=background-color:black></div>
+	<h2>Flurosis Dental</h2>
+	<select name=intraoral_flurosis required >
+		<option value=0>0 - Normal</option>
+		<option value=1>1 - Dudosa</option>
+		<option value=2>2 - Muy leve</option>
+		<option value=3>3 - Leve</option>
+		<option value=4>4 - Moderada</option>
+		<option value=5>5 - Severa</option>
+		<option value=8>8 - Excluido</option>
+		<option value=9>9 - No registrado</option>
+	</select>
+	
+<!--
+	<table>
+		<tbody>
+			
+			<tr>
+			
+				<th>14</th>
+			
+				<th>13</th>
+			
+				<th>12</th>
+			
+				<th>11</th>
+			
+				<th>21</th>
+			
+				<th>22</th>
+			
+				<th>23</th>
+			
+				<th>24</th>
+			
+			</tr>
+			<tr>
+			
+				<select name=intraoral_opacidades_14 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_13 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_12 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_11 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_21 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_22 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_23 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+				<select name=intraoral_opacidades_24 required >
+					
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+				</select>
+			
+			</tr>
+			<tr>
+				<th>
+					<select name=intraoral_opacidades_46 required >
+						
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+					</select>
+				</th>
+				<td cols=6></td>
+				<th>
+					<select name=intraoral_opacidades_36 required >
+						
+	<option value=0>0 - Normal</option>
+	<option value=1>1 - Opacidad delimitada</option>
+	<option value=2>2 - Opacidad difusa</option>
+	<option value=3>3 - Hipoplasia</option>
+	<option value=4>4 - Otros defectos</option>
+	<option value=5>5 - Opacidad delimitada y difusa</option>
+	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
+	<option value=7>7 - Opacidad difusa e hipoplasia</option>
+	<option value=8>8 - Las tres condiciones</option>
+	<option value=9>9 - No registrado</option>
+
+					</select>
+				</th>
+			</tr>
+			<tr>
+				<th>46</th>
+				<td cols=6></td>
+				<th>36</th>
+			</tr>
+		</tbody>
+	</table>
+-->
+	<div class=separator style=background-color:black></div>
+	<h2>Indice de Higiene Bucal Simplificado (IHB-S)</h2>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	<table id=higiene class=small-select>
+		<thead>
+			<th>Diente</th>
+			
+			
+			<th>16V</th>
+			
+			<th>11V</th>
+			
+			<th>26V</th>
+			
+			<th>36L</th>
+			
+			<th>31V</th>
+			
+			<th>46L</th>
+			
+		</thead>
+		<tbody>
+		
+			<tr>
+				<th>Placa</th>
+				
+					<th>
+	<select name="placa_16V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="placa_11V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="placa_26V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="placa_36L" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="placa_31V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="placa_46L" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+			</tr>
+		
+			<tr>
+				<th>Calculo</th>
+				
+					<th>
+	<select name="calculo_16V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="calculo_11V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="calculo_26V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="calculo_36L" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="calculo_31V" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+					<th>
+	<select name="calculo_46L" required >
+		<option value=0>0 - Ausencia</option>
+		<option value=1>1 - &lt; 1/3</option>
+		<option value=2>2 - &lt; 2/3</option>
+		<option value=3>3 - &gt; 2/3</option>
+	</select>
+</th>
+				
+			</tr>
+		
+		</tbody>
+	</table>
+
+	<div class=separator style=background-color:black></div>
+	<h2>Indice Periodontal de la Comunidad (IPC)</h2>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	
+	<table id="peridontico" class=small-select>
+		<tbody>
+			<tr>
+				<th></th> <th>17/16</th> <th>11</th> <th>26/27</th> <th></th>
+			</tr>
+			<tr>
+				<th>(54)</th>
+				
+					<th>
+<select name="peridontico_0" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+					<th>
+<select name="peridontico_1" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+					<th>
+<select name="peridontico_2" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+				<th>(56)</th>
+			</tr>
+			<tr>
+				<th>(57)</th>
+				
+					<th>
+<select name="peridontico_3" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+					<th>
+<select name="peridontico_4" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+					<th>
+<select name="peridontico_5" required >
+	<option value="0">0 - Sano</option>
+	<option value="1">1 - Hemorragia</option>
+	<option value="2">2 - Cálculo</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
+	<option value="X">X - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+</select>
+</th>
+				
+				<th>(59)</th>
+			</tr>
+			<tr>
+				<th></th> <th>47/46</th> <th>31</th> <th>36/37</th> <th></th>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class=separator style=background-color:black></div>
+	<h2>Perdida de Fijación</h2>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	
+	<table id="fijacion" class=small-select>
+		<tbody>
+			<tr>
+				<th></th> <th>17/16</th> <th>11</th> <th>26/27</th> <th></th>
+			</tr>
+			<tr>
+				<th>(60)</th>
+				
+					<th>
+<select name="fijacion_0" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+					<th>
+<select name="fijacion_1" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+					<th>
+<select name="fijacion_2" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+				<th>(62)</th>
+			</tr>
+			<tr>
+				<th>(63)</th>
+				
+					<th>
+<select name="fijacion_3" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+					<th>
+<select name="fijacion_4" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+					<th>
+<select name="fijacion_5" required >
+	<option value="0">0 - 0.3mm</option>
+	<option value="1">1 - 4.5mm (Unión Cemento-Esmalte (UCE) dentro de la banda negra)</option>
+	<option value="2">2 - 6.8mm (UCE entre límite superior de la banda negra y el anillo de 8.5mm)</option>
+	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
+	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
+	<option value="X">X - Sextante excluido</option>
+	<option value="9">9 - No Registrado (menores 15 años)</option>
+</select>
+</th>
+				
+				<th>(65)</th>
+			</tr>
+			<tr>
+				<th></th> <th>47/46</th> <th>31</th> <th>36/37</th> <th></th>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<div class=separator style=background-color:black></div>
+	<h2>Estado de la Dentición y Tratamiento Necesario</h2>
+	<div style=display:flex;gap:0>
+		
+	<table class=small-select>
+		<tbody>
+			<tr>
+				
+					<td colspan=3></td>
+				
+				
+					<th>55</th>
+				
+					<th>54</th>
+				
+					<th>53</th>
+				
+					<th>52</th>
+				
+					<th>51</th>
+				
+				
+			</tr>
+			<tr>
+				
+					<!--<th></th>-->
+				
+				
+					<th>18</th>
+				
+					<th>17</th>
+				
+					<th>16</th>
+				
+					<th>15</th>
+				
+					<th>14</th>
+				
+					<th>13</th>
+				
+					<th>12</th>
+				
+					<th>11</th>
+				
+				
+			</tr>
+			
+			<tr>
+				
+					<!--<th>Corona</th>-->
+				
+				
+					<th>
+						
+							
+	<select name="corona_18" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_17" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_16" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_15" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_14" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_13" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_12" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_11" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+			</tr>
+			
+			<tr>
+				
+					<!--<th>Tratamiento</th>-->
+				
+				
+					<th>
+						
+							
+	<select name="tratamiento_18" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_17" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_16" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_15" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_14" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_13" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_12" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_11" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+			</tr>
+			
+		</tbody>
+	</table>
+
+		
+	<table class=small-select>
+		<tbody>
+			<tr>
+				
+				
+					<th>61</th>
+				
+					<th>62</th>
+				
+					<th>63</th>
+				
+					<th>64</th>
+				
+					<th>65</th>
+				
+				
+					<td colspan=3></td>
+				
+			</tr>
+			<tr>
+				
+				
+					<th>21</th>
+				
+					<th>22</th>
+				
+					<th>23</th>
+				
+					<th>24</th>
+				
+					<th>25</th>
+				
+					<th>26</th>
+				
+					<th>27</th>
+				
+					<th>28</th>
+				
+				
+					<!--<th></th>-->
+				
+			</tr>
+			
+			<tr>
+				
+				
+					<th>
+						
+							
+	<select name="corona_21" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_22" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_23" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_24" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_25" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_26" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_27" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_28" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+					<!--<th>Corona</th>-->
+				
+			</tr>
+			
+			<tr>
+				
+				
+					<th>
+						
+							
+	<select name="tratamiento_21" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_22" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_23" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_24" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_25" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_26" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_27" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_28" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+					<!--<th>Tratamiento</th>-->
+				
+			</tr>
+			
+		</tbody>
+	</table>
+
+	</div>
+	<div style=display:flex;gap:0>
+		
+	<table class=small-select>
+		<tbody>
+			<tr>
+				
+					<td colspan=3></td>
+				
+				
+					<th>85</th>
+				
+					<th>84</th>
+				
+					<th>83</th>
+				
+					<th>82</th>
+				
+					<th>81</th>
+				
+				
+			</tr>
+			<tr>
+				
+					<!--<th></th>-->
+				
+				
+					<th>48</th>
+				
+					<th>47</th>
+				
+					<th>46</th>
+				
+					<th>45</th>
+				
+					<th>44</th>
+				
+					<th>43</th>
+				
+					<th>42</th>
+				
+					<th>41</th>
+				
+				
+			</tr>
+			
+			<tr>
+				
+					<!--<th>Corona</th>-->
+				
+				
+					<th>
+						
+							
+	<select name="corona_48" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_47" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_46" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_45" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_44" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_43" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_42" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_41" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+			</tr>
+			
+			<tr>
+				
+					<!--<th>Tratamiento</th>-->
+				
+				
+					<th>
+						
+							
+	<select name="tratamiento_48" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_47" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_46" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_45" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_44" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_43" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_42" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_41" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+			</tr>
+			
+		</tbody>
+	</table>
+
+		
+	<table class=small-select>
+		<tbody>
+			<tr>
+				
+				
+					<th>71</th>
+				
+					<th>72</th>
+				
+					<th>73</th>
+				
+					<th>74</th>
+				
+					<th>75</th>
+				
+				
+					<td colspan=3></td>
+				
+			</tr>
+			<tr>
+				
+				
+					<th>31</th>
+				
+					<th>32</th>
+				
+					<th>33</th>
+				
+					<th>34</th>
+				
+					<th>35</th>
+				
+					<th>36</th>
+				
+					<th>37</th>
+				
+					<th>38</th>
+				
+				
+					<!--<th></th>-->
+				
+			</tr>
+			
+			<tr>
+				
+				
+					<th>
+						
+							
+	<select name="corona_31" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_32" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_33" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_34" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_35" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_36" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_37" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="corona_38" required >
+		<option value=0>0 - Sano</option>
+		<option value=A>A - Sano (Primario)</option>
+		<option value=1>1 - Cariado</option>
+		<option value=B>B - Cariado (Primario)</option>
+		<option value=2>2 - Obturado con caries</option>
+		<option value=C>C - Obturado con caries (Primario)</option>
+		<option value=3>3 - Obturado sin caries</option>
+		<option value=D>D - Obturado sin caries (Primario)</option>
+		<option value=4>4 - Perdido por caries</option>
+		<option value=E>E - Perdido por caries (Primario)</option>
+		<option value=5>5 - Perdido por otro motivo</option>
+		<option value=6>6 - Fisura oburtada</option>
+		<option value=F>F - Fisura oburtada (Primario)</option>
+		<option value=7>7 - Soporte de puente, corona, implantes</option>
+		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
+		<option value=8>8 - Diente sin brotar</option>
+		<option value=T>T - Traumatismo (fractura)</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+					<!--<th>Corona</th>-->
+				
+			</tr>
+			
+			<tr>
+				
+				
+					<th>
+						
+							
+	<select name="tratamiento_31" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_32" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_33" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_34" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_35" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_36" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_37" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+					<th>
+						
+							
+	<select name="tratamiento_38" required >
+		<option value=0>0 - Ninguno</option>
+		<option value=P>P - Preventivo</option>
+		<option value=F>F - Obturación de fisura</option>
+		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=2>2 - Obturación de 2 o mas superficies</option>
+		<option value=3>3 - Corona por cualquier motivo</option>
+		<option value=4>4 - Canilla</option>
+		<option value=5>5 - Cuidado de la pulpa y restauración</option>
+		<option value=6>6 - Extracción</option>
+		<option value=7>7 - Necesidad de otra asistencia</option>
+		<option value=9>9 - No Registrado</option>
+	</select>
+
+						
+					</th>
+				
+				
+					<!--<th>Tratamiento</th>-->
+				
+			</tr>
+			
+		</tbody>
+	</table>
+
+	</div>
+
+	
+	<div class=separator style=background-color:black></div>
+	<h2>Erupción Dentaria</h2>
+	<span class=note>(5 a 18 años)</span>
+	<div id=erupcion>
+		<div style=display:flex;gap:0>
+			
+	<table class=small-select>
+	
+		<tr>
+			
+				<th>17</th>
+			
+				<th>16</th>
+			
+				<th>15</th>
+			
+				<th>14</th>
+			
+				<th>13</th>
+			
+				<th>12</th>
+			
+				<th>11</th>
+			
+		</tr>
+	
+	<tr>
+		
+		<th>
+			<select name="erupcion_dentaria_17" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_16" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_15" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_14" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_13" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_12" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_11" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+	</tr>
+	
+	</table>
+
+			
+	<table class=small-select>
+	
+		<tr>
+			
+				<th>21</th>
+			
+				<th>22</th>
+			
+				<th>23</th>
+			
+				<th>24</th>
+			
+				<th>25</th>
+			
+				<th>26</th>
+			
+				<th>27</th>
+			
+		</tr>
+	
+	<tr>
+		
+		<th>
+			<select name="erupcion_dentaria_21" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_22" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_23" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_24" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_25" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_26" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_27" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+	</tr>
+	
+	</table>
+
+		</div>
+		<div style=display:flex;gap:0>
+			
+	<table class=small-select>
+	
+	<tr>
+		
+		<th>
+			<select name="erupcion_dentaria_47" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_46" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_45" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_44" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_43" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_42" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_41" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+	</tr>
+	
+		<tr>
+			
+				<th>47</th>
+			
+				<th>46</th>
+			
+				<th>45</th>
+			
+				<th>44</th>
+			
+				<th>43</th>
+			
+				<th>42</th>
+			
+				<th>41</th>
+			
+		</tr>
+	
+	</table>
+
+			
+	<table class=small-select>
+	
+	<tr>
+		
+		<th>
+			<select name="erupcion_dentaria_31" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_32" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_33" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_34" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_35" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_36" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+		<th>
+			<select name="erupcion_dentaria_37" required >
+				<option value=0>0 - No erupcionado</option>
+				<option value=1>1 - Un tercio</option>
+				<option value=2>2 - Hasta 2/3</option>
+				<option value=3>3 - Tres tercios</option>
+				<option value=9>9 - No registra</option>
+			</select>
+		</th>
+		
+	</tr>
+	
+		<tr>
+			
+				<th>31</th>
+			
+				<th>32</th>
+			
+				<th>33</th>
+			
+				<th>34</th>
+			
+				<th>35</th>
+			
+				<th>36</th>
+			
+				<th>37</th>
+			
+		</tr>
+	
+	</table>
+
+		</div>
+	</div>
+	<div class=separator style=background-color:black></div>
+	<h2>Necesidad de Prótesis</h2>
+	<span class=note>(a partir de los 15 años de edad)</span>
+	<div class=options>
+	
+		<!-- >= 15 años -->
+		<div>
+			<label for="protesis_necesidad_superior">Superior</label>
+			<select name="protesis_necesidad_superior" required >
+				<option value=0>0 - No necesita</option>
+				<option value=1>1 - Necesita y no tiene</option>
+				<option value=2>2 - Tiene adecuada</option>
+				<option value=3>3 - Tiene inadecuada</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	
+		<!-- >= 15 años -->
+		<div>
+			<label for="protesis_necesidad_inferior">Inferior</label>
+			<select name="protesis_necesidad_inferior" required >
+				<option value=0>0 - No necesita</option>
+				<option value=1>1 - Necesita y no tiene</option>
+				<option value=2>2 - Tiene adecuada</option>
+				<option value=3>3 - Tiene inadecuada</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	
+	</div>
+	
+	<div class=separator style=background-color:black></div>
+	<h2>Tipo de Prótesis</h2>
+	<div class=options>
+	
+		<div>
+			<label for="protesis_tipo_superior">Superior</label>
+			<select name="protesis_tipo_superior" required >
+				<option value=0>0 - No posee</option>
+				<option value=1>1 - Prótesis parcial removible</option>
+				<option value=2>2 - Prótesis Total</option>
+				<option value=3>3 - Prótesis fija</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	
+		<div>
+			<label for="protesis_tipo_inferior">Inferior</label>
+			<select name="protesis_tipo_inferior" required >
+				<option value=0>0 - No posee</option>
+				<option value=1>1 - Prótesis parcial removible</option>
+				<option value=2>2 - Prótesis Total</option>
+				<option value=3>3 - Prótesis fija</option>
+				<option value=9>9 - No registrado</option>
+			</select>
+		</div>
+	
+	</div>
+
+	<div class=separator style=background-color:black></div>
+	<!--TODO: JS for disable when ninguno-->
+	<h2>Habitos</h2>
+	<div class=options>
+		<div>
+			<label for=habitos_ninguno>Ninguno</label>
+			<input type=checkbox name=habitos_ninguno  required />
+		</div>
+		<div>
+			<label for=habitos_bruxismo>Bruxismo</label>
+			<input type=checkbox name=habitos_bruxismo  required />
+		</div>
+		<div>
+			<label for=habitos_respiracion_bucal>Respiración Bucal</label>
+			<input type=checkbox name=habitos_respiracion_bucal  required />
+		</div>
+		<div>
+			<label for=habitos_deglucion_atipica>Deglución Atipica</label>
+			<input type=checkbox name=habitos_deglucion_atipica  required />
+		</div>
+		<div>
+			<label for=habitos_succion_digital>Succión Digital</label>
+			<input type=checkbox name=habitos_succion_digital  required />
+		</div>
+		<div>
+			<label for=habitos_no_registrado>No Registrado</label>
+			<input type=checkbox name=habitos_no_registrado  required />
+		</div>
+	</div>
+
+	<div class=separator style=background-color:black></div>
+	<div class=options>
+		<div>
+			<label for="relacion_oclusion_2dos_molares">Relación de Oclusión de 2dos Molares Primarios</label>
+			<select name="relacion_oclusion_2dos_molares" required >
+				<option value=0>0 - Plano terminal recto</option>
+				<option value=1>1 - Escalón dental</option>
+				<option value=2>2 - Escalón mesial</option>
+				<option value=3>3 - PT Recto - E mesial</option>
+				<option value=4>4 - PT Recto - E distal</option>
+				<option value=5>5 - Escalón distal - Escalón mesial</option>
+				<option value=9>9 - No Aplicable</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="relacion_oclusion_1ros_molares">Relación de Oclusión de 1ros Molares Permanentes</label>
+			<select name="relacion_oclusion_1ros_molares" required >
+				<option value=0>0 - Clase I</option>
+				<option value=1>1 - Clase II</option>
+				<option value=2>2 - Clase III</option>
+				<option value=9>9 - No Aplicable</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="apiñamiento">Apiñamiento</label>
+			<select name="apiñamiento" required >
+				<option value=0>0 - No hay arcos apiñados</option>
+				<option value=1>1 - Un arco apiñado</option>
+				<option value=2>2 - Dos arcos apiñados</option>
+			</select>
+		</div>
+
+		<div>
+			<label for="espaciamiento">Espaciamiento</label>
+			<select name="espaciamiento" required >
+				<option value=0>0 - No hay arcos espaciados</option>
+				<option value=1>1 - Un arco espaciado</option>
+				<option value=2>2 - Dos arcos espaciados</option>
+			</select>
+		</div>
+
+		
+			<div>
+				<label for="diastema">Diastema</label>
+				<select name="diastema" required >
+					
+<option value=0 selected>0 - No</option>
+<option value=1>1 - Si</option>
+
+				</select>
+			</div>
+		
+			<div>
+				<label for="mordida_abierta">Mordida abierta</label>
+				<select name="mordida_abierta" required >
+					
+<option value=0 selected>0 - No</option>
+<option value=1>1 - Si</option>
+
+				</select>
+			</div>
+		
+			<div>
+				<label for="morida_profunda_anterior">Morida profunda anterior</label>
+				<select name="morida_profunda_anterior" required >
+					
+<option value=0 selected>0 - No</option>
+<option value=1>1 - Si</option>
+
+				</select>
+			</div>
+		
+			<div>
+				<label for="morida_tope_a_tope">Morida tope a tope</label>
+				<select name="morida_tope_a_tope" required >
+					
+<option value=0 selected>0 - No</option>
+<option value=1>1 - Si</option>
+
+				</select>
+			</div>
+		
+
+		<div>
+			<label for=mordida_cruzada>Mordida Cruzada</label>
+			<select name=mordida_cruzada required >
+				<option value="1">1 - Sin alteración</option>
+				<option value="2">2 - Mordida cruzada anterior</option>
+				<option value="3">3 - Mordida cruzada posterior unilateral</option>
+				<option value="4">4 - Mordida cruzada posterior bilateral</option>
+				<option value="5">5 - Mordida cruzada anterior posterior (ambas)</option>
+			</select>
+		</div>
+	</div>
+	
+	<h1>Necesidad Inmediata de Asistencia y Consulta</h1>
+	<div class=options>
+	
+	
+		<div>
+			<label for="necesidad_asistencia_trastorno">Trastorno que amenaza la vida</label>
+			<select name="necesidad_asistencia_trastorno" required >
+				<option value=1>1 - Ninguno</option>
+				<option value=2>2 - Presenta</option>
+				<option value=3>3 - No registrado</option>
+			</select>
+		</div>
+	
+		<div>
+			<label for="necesidad_asistencia_dolor">Dolor o infección</label>
+			<select name="necesidad_asistencia_dolor" required >
+				<option value=1>1 - Ninguno</option>
+				<option value=2>2 - Presenta</option>
+				<option value=3>3 - No registrado</option>
+			</select>
+		</div>
+	
+	</div>
+	<input type=submit value="Enviar" />
+</form>
+<script>
+	age_ranges = [
+		{query: 'table[id="higiene"] select', min: 5},
+		{query: 'table[id="peridontico"] select', min: 15},
+		{query: 'table[id="fijacion"] select', min: 15},
+		{query: '[id="erupcion"] select', min: 5, max: 18},
+		{query: '[name^="protesis_necesidad_"]', min: 15},
+	]
+	for (let r of age_ranges)
+		for (let e of document.querySelectorAll(r.query))
+			e.setAttribute("disabled", "true")
+	document.getElementById("edad").addEventListener("change", (e) => {
+		for (let range of age_ranges) {
+			if (
+				(range.hasOwnProperty("min") && e.target.value < range.min)
+				||
+				(range.hasOwnProperty("max") && e.target.value > range.max)
+			) {
+				for (let e of document.querySelectorAll(range.query))
+					e.setAttribute("disabled", "true")
+				continue
+			}
+			for (let e of document.querySelectorAll(range.query))
+				e.removeAttribute("disabled")
+		}
+	})
+</script>
+<script type="text/javascript" src="post.js"></script>
+</body>
+</html>

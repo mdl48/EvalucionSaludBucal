@@ -36,23 +36,40 @@ form {
 		}
 	}
 }
-h2 {
+h1 {
+	font-size: 1.2rem;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	padding: 10px 2em;
+	text-align: center;
+	align-self: stretch;
+	padding: 10px 1rem;
+}
+h2 {
+	font-size: 1.1rem;
 }
 label {
 	display: block;
 }
 .small-select select {
-	width: 2.5em;
-	height: 2em;
+	width: 2rem;
+	height: 2rem;
 }
+button, input[type="submit"] { all: unset }
 select, input {
 	width: 10em;
 	background-color: white;
 	color: black;
 	border-radius: 5px;
+}
+a { text-decoration: none }
+button, a, input[type="submit"] {
+	background-color: white;
+	color: black;
+	border-radius: 5px;
+}
+input[type="submit"], button, a {
+	padding: var(--pad);
+	box-shadow: 0px 3px 5px black;
 }
 span.note { color: gray }
 th { font-weight: normal }
@@ -77,4 +94,13 @@ th { font-weight: normal }
 		align-items: center;
 		justify-content: space-evenly;
 	}
+}
+#welcome {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: var(--pad);
+	flex-direction: column;
+	padding: var(--pad);
+	align-items: center;
+	> div { display: flex; flex-direction: column; gap: var(--smallpad); }
 }
