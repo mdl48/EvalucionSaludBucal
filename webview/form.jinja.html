@@ -6,16 +6,14 @@
 	<option value=4>4 - Dolor espontáneo articular</option>
 	<option value=5>5 - Dolor a la palpación articular</option>
 	<option value=6>6 - Dolor al movimiento</option>
-	<option value=9>9 - No registrado</option>
 {% endmacro %}
 
 {% macro temporomaxilar_signos() %}
-	<option value=1>1 - Ausencia</option>
-	<option value=2>2 - Chasquido</option>
-	<option value=3>3 - Contractura maseteriana</option>
-	<option value=4>4 - Reducción de la apertura &lt; 30 mm</option>
-	<option value=5>5 - Reducción moviemiento de lateralidad y protusión</option>
-	<option value=9>9 - No registrado</option>
+	<option value=0>0 - Ausencia</option>
+	<option value=1>1 - Chasquido</option>
+	<option value=2>2 - Contractura maseteriana</option>
+	<option value=3>3 - Reducción de la apertura &lt; 30 mm</option>
+	<option value=4>4 - Reducción moviemiento de lateralidad y protusión</option>
 {% endmacro %}
 
 {% macro temporomaxilar_option(name, macro) %}
@@ -61,7 +59,6 @@
 	<option value=6>6 - Lengua</option>
 	<option value=7>7 - Paladar duro y/o blando</option>
 	<option value=8>8 - Bordes alveolares</option>
-	<option value=9>9 - No registrado</option>
 {% endmacro %}
 
 {% macro intraoral_color() %}
@@ -113,6 +110,10 @@
 <option value=0 selected>0 - No</option>
 <option value=1>1 - Si</option>
 {% endmacro %}
+{% macro presenta() %}
+<option value=0 selected>0 - Ausencia</option>
+<option value=1>1 - Presencia</option>
+{% endmacro %}
 
 {% macro select3(name, content) %}
 	{% for i in range(3) %}
@@ -132,9 +133,9 @@
 {% macro higiene_select(name) %}
 	<select name="{{name}}" required >
 		<option value=0>0 - Ausencia</option>
-		<option value=1>1 - &lt; 1/3</option>
-		<option value=2>2 - &lt; 2/3</option>
-		<option value=3>3 - &gt; 2/3</option>
+		<option value=1>1 - Hasta 1/3</option>
+		<option value=2>2 - Mas de 1/3 Hasta 2/3</option>
+		<option value=3>3 - Mas de 2/3</option>
 	</select>
 {% endmacro %}
 
@@ -143,10 +144,10 @@
 	<option value="0">0 - Sano</option>
 	<option value="1">1 - Hemorragia</option>
 	<option value="2">2 - Cálculo</option>
-	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sondA parcialmente visible)</option>
 	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
-	<option value="X">X - Sextante excluido (-2 dientes)</option>
-	<option value="9">9 - No Registrado (menores 15 años, edéntulo)</option>
+	<option value="5">5 - Sextante excluido (-2 dientes)</option>
+	<option value="9">9 - Edentulo</option>
 </select>
 {% endmacro %}
 
@@ -158,7 +159,6 @@
 	<option value="3">3 - 9.11mm (UCE entre anillos de 8.5mm y 11.5mm)</option>
 	<option value="4">4 - 12mm o más alla (UCE + allá del anillo de 11.5mm)</option>
 	<option value="X">X - Sextante excluido</option>
-	<option value="9">9 - No Registrado (menores 15 años)</option>
 </select>
 {% endmacro %}
 {% macro corona(name) %}
@@ -180,7 +180,6 @@
 		<option value=G>G - Soporte de puente, corona, implantes (Primario)</option>
 		<option value=8>8 - Diente sin brotar</option>
 		<option value=T>T - Traumatismo (fractura)</option>
-		<option value=9>9 - No Registrado</option>
 	</select>
 {% endmacro %}
 {% macro tratamiento(name) %}
@@ -188,14 +187,13 @@
 		<option value=0>0 - Ninguno</option>
 		<option value=P>P - Preventivo</option>
 		<option value=F>F - Obturación de fisura</option>
-		<option value=1>1 - Oburtación de una superficie</option>
+		<option value=1>1 - Obturación de una superficie</option>
 		<option value=2>2 - Obturación de 2 o mas superficies</option>
 		<option value=3>3 - Corona por cualquier motivo</option>
-		<option value=4>4 - Canilla</option>
+		<option value=4>4 - Carilla</option>
 		<option value=5>5 - Cuidado de la pulpa y restauración</option>
 		<option value=6>6 - Extracción</option>
 		<option value=7>7 - Necesidad de otra asistencia</option>
-		<option value=9>9 - No Registrado</option>
 	</select>
 {% endmacro %}
 
@@ -204,20 +202,20 @@
 		<tbody>
 			<tr>
 				{% if not right %}
-					<td colspan=3></td>
+					<td colspan=2></td>
 				{% endif %}
 				{% for i in directed_loop(1, 5, not right) %}
 					<th>{{n + 4}}{{i}}</th>
 				{% endfor %}
 				{% if right %}
-					<td colspan=3></td>
+					<td colspan=2></td>
 				{% endif %}
 			</tr>
 			<tr>
 				{% if not right %}
 					<!--<th></th>-->
 				{% endif %}
-				{% for i in directed_loop(1, 8, not right) %}
+				{% for i in directed_loop(1, 7, not right) %}
 					<th>{{n}}{{i}}</th>
 				{% endfor %}
 				{% if right %}
@@ -229,7 +227,7 @@
 				{% if not right %}
 					<!--<th>{{ t|capitalize }}</th>-->
 				{% endif %}
-				{% for i in directed_loop(1, 8, not right) %}
+				{% for i in directed_loop(1, 7, not right) %}
 					<th>
 						{% if t == "corona" %}
 							{{ corona("corona_" + n|string + i|string) }}
@@ -265,7 +263,6 @@
 				<option value=1>1 - Un tercio</option>
 				<option value=2>2 - Hasta 2/3</option>
 				<option value=3>3 - Tres tercios</option>
-				<option value=9>9 - No registra</option>
 			</select>
 		</th>
 		{% endfor %}
@@ -284,24 +281,24 @@
 	<table id="{{name}}" class=small-select>
 		<tbody>
 			<tr>
-				<th></th> <th>17/16</th> <th>11</th> <th>26/27</th> <th></th>
+				<th>17/16</th> <th>11</th> <th>26/27</th>
 			</tr>
 			<tr>
-				<th>({{ numbers[0] }})</th>
+				<!--<th>({{ numbers[0] }})</th>-->
 				{% for i in range(3) %}
 					<th>{{ content(name + "_" + i | string) }}</th>
 				{% endfor %}
-				<th>({{ numbers[1] }})</th>
+				<!--<th>({{ numbers[1] }})</th>-->
 			</tr>
 			<tr>
-				<th>({{ numbers[2] }})</th>
+				<!--<th>({{ numbers[2] }})</th>-->
 				{% for i in range(3) %}
 					<th>{{ content(name + "_" + (i + 3) | string) }}</th>
 				{% endfor %}
-				<th>({{ numbers[3] }})</th>
+				<!--<th>({{ numbers[3] }})</th>-->
 			</tr>
 			<tr>
-				<th></th> <th>47/46</th> <th>31</th> <th>36/37</th> <th></th>
+				<th>47/46</th> <th>31</th> <th>36/37</th>
 			</tr>
 		</tbody>
 	</table>
@@ -319,7 +316,7 @@
 	<h1>Datos del Paciente</h1>
 	<div class=options>
 		<div>
-			<label for=cedula>Cedula</label>
+			<label for=cedula>Cédula</label>
 			<input name=cedula type=number pattern="[1-9][0-9]+" required />
 		</div>
 		<div>
@@ -339,12 +336,37 @@
 		</div>
 		<div>
 			<label for=edad>Edad</label>
-			<input id=edad name=edad type=number pattern="[1-9][0-9]+" required />
+			<input id=edad name=edad type=number pattern="[1-9][0-9]*" required />
 		</div>
 		<div>
 			<label for=estado>Estado</label>
-			<!--TODO: Select-->
-			<input name=estado  required />
+			<select name=estado required>
+				<option value="Amazonas">Amazonas</option>
+				<option value="Anzoategui">Anzoátegui</option>
+				<option value="Apure">Apure</option>
+				<option value="Aragua">Aragua</option>
+				<option value="Barinas">Barinas</option>
+				<option value="Bolivar">Bolívar</option>
+				<option value="Carabobo">Carabobo</option>
+				<option value="Cojedes">Cojedes</option>
+				<option value="Delta Amacuro">Delta Amacuro</option>
+				<option value="Distrito Capital">Distrito Capital</option>
+				<option value="Falcon">Falcón</option>
+				<option value="Guárico">Guárico</option>
+				<option value="Lara">Lara</option>
+				<option value="Merida">Mérida</option>
+				<option value="Miranda">Miranda</option>
+				<option value="Monagas">Monagas</option>
+				<option value="Nueva Esparta">Nueva Esparta</option>
+				<option value="Portuguesa">Portuguesa</option>
+				<option value="Sucre">Sucre</option>
+				<option value="Tachira">Táchira</option>
+				<option value="Trujillo">Trujillo</option>
+				<option value="Vargas">Vargas</option>
+				<option value="Yaracuy">Yaracuy</option>
+				<option value="Zulia">Zulia</option>
+				<option value="Dependencias Federales">Dependencias Federales</option>
+			</select>
 		</div>
 		<div>
 			<label for=municipio>Municipio</label>
@@ -363,7 +385,8 @@
 	</div>
 -->
 	<h2>Evaluación de la Articulación Temporomaxilar</h2>
-	<div class=options>
+	<span class=note>(A partir de los 12 años de edad)</span>
+	<div id=temporomaxilar class=options>
 		<div>
 			<label for="temporomaxilar_sintoma">Sintomas</label>
 			<select name="temporomaxilar_sintoma" required >
@@ -380,24 +403,24 @@
 	</div>
 	<h1>Evaluación Intraoral</h1>
 	<h2>Lesion</h2>
-	<div class=options>
+	<span class=note>(A partir de los 5 años de edad)</span>
+	<div id=lesion class=options>
 		<script>
 			function disable_lesion(e) {
 				if (e.target.value != "2") {
 					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-						e.style.removeProperty("display")
+						e.removeAttribute("disabled")
 					return;
 				}
 				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-					e.style.display = "none"
+					e.setAttribute("disabled", "true")
 			}
 		</script>
 		<div>
 		<label for=intraoral_lesion>Hay Lesion</label>
 			<select name=intraoral_lesion onchange="disable_lesion(event)" required >
-				<option value=1>1 - Si</option>
-				<option value=2 selected=true>2 - No</option>
-				<option value=9>9 - No registrado</option>
+				<option value=0>0 - Si</option>
+				<option value=1 selected=true>1 - No</option>
 			</select>
 		</div>
 		{{ select("Localización", "intraoral_lesion_localizacion", intraoral_localizacion) }}
@@ -423,6 +446,7 @@
 	
 	<div class=separator style=background-color:black></div>
 	<h2>Flurosis Dental</h2>
+	<span class=note>(A partir de los 6 años de edad)</span>
 	<select name=intraoral_flurosis required >
 		<option value=0>0 - Normal</option>
 		<option value=1>1 - Dudosa</option>
@@ -430,8 +454,6 @@
 		<option value=3>3 - Leve</option>
 		<option value=4>4 - Moderada</option>
 		<option value=5>5 - Severa</option>
-		<option value=8>8 - Excluido</option>
-		<option value=9>9 - No registrado</option>
 	</select>
 	
 <!--
@@ -473,7 +495,7 @@
 -->
 	<div class=separator style=background-color:black></div>
 	<h2>Indice de Higiene Bucal Simplificado (IHB-S)</h2>
-	<span class=note>(a partir de los 15 años de edad)</span>
+	<span class=note>(A partir de los 15 años de edad)</span>
 	<table id=higiene class=small-select>
 		<thead>
 			<th>Diente</th>
@@ -496,13 +518,9 @@
 
 	<div class=separator style=background-color:black></div>
 	<h2>Indice Periodontal de la Comunidad (IPC)</h2>
-	<span class=note>(a partir de los 15 años de edad)</span>
+	<span class=note>(A partir de los 15 años de edad)</span>
 	{{ tabla_dientes_3_2("peridontico", peridontico, [54, 56, 57, 59]) }}
-	<div class=separator style=background-color:black></div>
-	<h2>Perdida de Fijación</h2>
-	<span class=note>(a partir de los 15 años de edad)</span>
-	{{ tabla_dientes_3_2("fijacion", fijacion, [60, 62, 63, 65]) }}
-
+	
 	<div class=separator style=background-color:black></div>
 	<h2>Estado de la Dentición y Tratamiento Necesario</h2>
 	<div style=display:flex;gap:0>
@@ -530,7 +548,7 @@
 	</div>
 	<div class=separator style=background-color:black></div>
 	<h2>Necesidad de Prótesis</h2>
-	<span class=note>(a partir de los 15 años de edad)</span>
+	<span class=note>(A partir de los 15 años de edad)</span>
 	<div class=options>
 	{% for t in ["superior", "inferior"] %}
 		<!-- >= 15 años -->
@@ -549,6 +567,8 @@
 	
 	<div class=separator style=background-color:black></div>
 	<h2>Tipo de Prótesis</h2>
+	<span class=note>(A partir de los 15 años de edad)</span>
+	
 	<div class=options>
 	{% for t in ["superior", "inferior"] %}
 		<div>
@@ -567,30 +587,53 @@
 	<div class=separator style=background-color:black></div>
 	<!--TODO: JS for disable when ninguno-->
 	<h2>Habitos</h2>
-	<div class=options>
+	<span class=note>(Hasta los 18 años)</span>
+	<div class=options id="habitos">
 		<div>
-			<label for=habitos_ninguno>Ninguno</label>
-			<input type=checkbox name=habitos_ninguno  required />
+			<label>Tiene</label>
+			<script>
+				function habitos_read_only(x) {
+					for (let e of document.querySelectorAll('[name^=\"habitos_\"')) {
+						if (!x.target.checked) {
+							e.setAttribute("disabled", "true")
+							e.value = "0"
+						}
+						else
+							e.removeAttribute("disabled")
+					}
+				}
+			</script>
+			<input type=checkbox required value=true onchange="habitos_read_only(event)" />
 		</div>
 		<div>
 			<label for=habitos_bruxismo>Bruxismo</label>
-			<input type=checkbox name=habitos_bruxismo  required />
+			<select name=habitos_bruxismo  required >
+				{{ presenta() }}
+			</select>
 		</div>
 		<div>
 			<label for=habitos_respiracion_bucal>Respiración Bucal</label>
-			<input type=checkbox name=habitos_respiracion_bucal  required />
+			<select name=habitos_respiracion_bucal  required >
+				{{ presenta() }}
+			</select>
 		</div>
 		<div>
 			<label for=habitos_deglucion_atipica>Deglución Atipica</label>
-			<input type=checkbox name=habitos_deglucion_atipica  required />
+			<select name=habitos_deglucion_atipica  required >
+				{{ presenta() }}
+			</select>
 		</div>
 		<div>
 			<label for=habitos_succion_digital>Succión Digital</label>
-			<input type=checkbox name=habitos_succion_digital  required />
+			<select name=habitos_succion_digital  required >
+				{{ presenta() }}
+			</select>
 		</div>
 		<div>
 			<label for=habitos_no_registrado>No Registrado</label>
-			<input type=checkbox name=habitos_no_registrado  required />
+			<select name=habitos_no_registrado  required >
+				{{ presenta() }}
+			</select>
 		</div>
 	</div>
 
@@ -598,6 +641,7 @@
 	<div class=options>
 		<div>
 			<label for="relacion_oclusion_2dos_molares">Relación de Oclusión de 2dos Molares Primarios</label>
+			<span class=note>(Hasta los 8 años)</span>
 			<select name="relacion_oclusion_2dos_molares" required >
 				<option value=0>0 - Plano terminal recto</option>
 				<option value=1>1 - Escalón dental</option>
@@ -605,17 +649,16 @@
 				<option value=3>3 - PT Recto - E mesial</option>
 				<option value=4>4 - PT Recto - E distal</option>
 				<option value=5>5 - Escalón distal - Escalón mesial</option>
-				<option value=9>9 - No Aplicable</option>
 			</select>
 		</div>
 
 		<div>
 			<label for="relacion_oclusion_1ros_molares">Relación de Oclusión de 1ros Molares Permanentes</label>
+			<span class=note>(Hasta los 3 años)</span>
 			<select name="relacion_oclusion_1ros_molares" required >
 				<option value=0>0 - Clase I</option>
 				<option value=1>1 - Clase II</option>
 				<option value=2>2 - Clase III</option>
-				<option value=9>9 - No Aplicable</option>
 			</select>
 		</div>
 
@@ -641,7 +684,10 @@
 			<div>
 				<label for="{{x}}">{{ x.replace("_", " ")|capitalize }}</label>
 				<select name="{{x}}" required >
-					{{ no_si() }}
+					{{ presenta() }}
+					{% if x == "diastema" %}
+					<option value="N">N - No Aplica</option>
+					{% endif %}
 				</select>
 			</div>
 		{% endfor %}
@@ -649,11 +695,11 @@
 		<div>
 			<label for=mordida_cruzada>Mordida Cruzada</label>
 			<select name=mordida_cruzada required >
-				<option value="1">1 - Sin alteración</option>
-				<option value="2">2 - Mordida cruzada anterior</option>
-				<option value="3">3 - Mordida cruzada posterior unilateral</option>
-				<option value="4">4 - Mordida cruzada posterior bilateral</option>
-				<option value="5">5 - Mordida cruzada anterior posterior (ambas)</option>
+				<option value="0">0 - Sin alteración</option>
+				<option value="1">1 - Mordida cruzada anterior</option>
+				<option value="2">2 - Mordida cruzada posterior unilateral</option>
+				<option value="3">3 - Mordida cruzada posterior bilateral</option>
+				<option value="4">4 - Mordida cruzada anterior posterior (ambas)</option>
 			</select>
 		</div>
 	</div>
@@ -665,9 +711,7 @@
 		<div>
 			<label for="necesidad_asistencia_{{x}}">{{necesidades[x]}}</label>
 			<select name="necesidad_asistencia_{{x}}" required >
-				<option value=1>1 - Ninguno</option>
-				<option value=2>2 - Presenta</option>
-				<option value=3>3 - No registrado</option>
+				{{ presenta() }}
 			</select>
 		</div>
 	{% endfor %}
@@ -676,15 +720,29 @@
 </form>
 <script>
 	age_ranges = [
+		{query: "#lesion select", min: 5},
+		{query: "#temporomaxilar select", min: 12},
 		{query: 'table[id="higiene"] select', min: 5},
 		{query: 'table[id="peridontico"] select', min: 15},
 		{query: 'table[id="fijacion"] select', min: 15},
 		{query: '[id="erupcion"] select', min: 5, max: 18},
-		{query: '[name^="protesis_necesidad_"]', min: 15},
+		{query: '[name^="protesis_"]', min: 15},
+		{query: '[name="relacion_oclusion_1ros_molares"]', max: 3},
+		{query: '[name="relacion_oclusion_2dos_molares"]', max: 8},
+		{query: '[name="intraoral_flurosis"]', min: 6},
+		{query: '#habitos :is(select, input)', max: 18}
 	]
+	function disable(e) {
+		let option = document.createElement("option")
+		option.value = "N"
+		option.textContent = "N - No Aplica"
+		e.appendChild(option)
+		e.value = "N"
+		e.setAttribute("disabled", "true")
+	}
 	for (let r of age_ranges)
-		for (let e of document.querySelectorAll(r.query))
-			e.setAttribute("disabled", "true")
+		for (let el of document.querySelectorAll(r.query))
+			disable(el)
 	document.getElementById("edad").addEventListener("change", (e) => {
 		for (let range of age_ranges) {
 			if (
@@ -692,15 +750,21 @@
 				||
 				(range.hasOwnProperty("max") && e.target.value > range.max)
 			) {
-				for (let e of document.querySelectorAll(range.query))
-					e.setAttribute("disabled", "true")
+				for (let el of document.querySelectorAll(range.query))
+					disable(el)
 				continue
 			}
-			for (let e of document.querySelectorAll(range.query))
-				e.removeAttribute("disabled")
+			for (let el of document.querySelectorAll(range.query)) {
+				el.value = "0"
+				null_options = el.querySelectorAll('option[value="N"]')
+				for (let o of null_options)
+					o.remove()
+				el.removeAttribute("disabled")
+			}
 		}
 	})
 </script>
 <script type="text/javascript" src="post.js"></script>
 </body>
 </html>
+

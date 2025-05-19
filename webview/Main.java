@@ -29,6 +29,14 @@ class Handler {
 	WebView web;
 	Activity activity;
 	HashMap<String, String> variables;
+	public HashMap<String, String> cursorMap(Cursor cursor) {
+		if(!cursor.moveToNext())
+			return null;
+		HashMap<String, String> map = new HashMap<>();
+		for (int i = 0; i < cursor.getColumnCount(); i++)
+			map.put(cursor.getColumnName(i), cursor.getString(i));
+		return map;
+	}
 	public Handler(Activity activity, WebView web, SQLiteDatabase db) {
 		this.db = db;
 		this.web = web;
@@ -54,12 +62,41 @@ class Handler {
 		}
 	}
 	@JavascriptInterface
-	public void uploadForms() {
-		Url url = new Url("http://localhost:10000/");
-		HttpURLConnection http = (HttpURLConnection) url.openConnection();
-		http.setRequestMethod("POST");
-		http.setRequestProperty("Content-Type", "application/json");
-        OutputStream out = http.getOutputStream();
+	public void export() {
+		try {
+			URL url = new URL("http://localhost:10000/");
+			HttpURLConnection http = (HttpURLConnection) url.openConnection();
+			http.setRequestMethod("POST");
+			http.setRequestProperty("Content-Type", "application/json");
+			http.setDoOutput(true);
+			Cursor c = db.rawQuery("select * from formularios where exportado = 0", new String[] {});
+			HashMap<String, String> row;
+			JSONArray list = new JSONArray();
+			while((row = cursorMap(c)) != null) {
+				JSONObject object = new JSONObject();
+				for (Map.Entry<String, String> entry : row.entrySet())
+					object.put(entry.getKey(), entry.getValue());
+				list.put(object);
+			}
+			byte[] bytes = list.toString().getBytes("utf-8");
+			http.setRequestProperty("Content-Length", String.valueOf(bytes.length));
+			
+			OutputStream out = http.getOutputStream();
+			out.write(bytes);
+			out.flush();
+			out.close();
+			int ret = http.getResponseCode();
+			Log.i("webview", "[export] HTTP Response: " + ret);
+			if (ret != HttpURLConnection.HTTP_OK) {
+				activity.runOnUiThread(() -> Toast.makeText(activity, "Error en el servidor al subir los datos: " + ret, Toast.LENGTH_LONG).show());
+				return;
+			}
+		} catch(Exception e) {
+			Log.e("webview", "[export] " + e.toString() + "\n" + Log.getStackTraceString(e));
+			activity.runOnUiThread(() -> Toast.makeText(activity, "No se pudieron exportar los datos: " + e.toString(), Toast.LENGTH_LONG).show());
+			return;
+		}
+		activity.runOnUiThread(() -> Toast.makeText(activity, "Los datos fueron exportados exitosamente", Toast.LENGTH_LONG).show());
 	}
 	@JavascriptInterface
 	public void log(String msg) {
@@ -69,9 +106,6 @@ class Handler {
 	public String getvar(String key) {
 		Log.i("webview", "[GETVAR] " + key + " = " + variables.get(key));
 		return variables.get(key);
-	}
-	@JavascriptInterface
-	public void export() {
 	}
 	@JavascriptInterface
 	public void post(String method, String json) {
