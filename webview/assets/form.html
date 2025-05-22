@@ -148,27 +148,43 @@
 	<span class=note>(A partir de los 5 años de edad)</span>
 	<div id=lesion class=options>
 		<script>
+			function disable(e) {
+				let option = document.createElement("option")
+				option.value = "N"
+				option.textContent = "N - No Aplica"
+				e.appendChild(option)
+				e.value = "N"
+				e.setAttribute("disabled", "true")
+			}
+			function enable(e) {
+				e.value = "0"
+				null_options = e.querySelectorAll('option[value="N"]')
+				for (let o of null_options)
+					o.remove()
+				e.removeAttribute("disabled")
+			}
+			
 			function disable_lesion(e) {
 				if (e.target.value == 0) {
-					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-						e.removeAttribute("disabled")
+					for (let e of document.querySelectorAll('[name^="lesion_"]'))
+						enable(e)
 					return;
 				}
-				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-					e.setAttribute("disabled", "true")
+				for (let e of document.querySelectorAll('[name^="lesion_"]'))
+					disable(e)
 			}
 		</script>
 		<div>
 		<label>Hay Lesion</label>
-			<select onchange="disable_lesion(event)" required >
+			<select name=lesion onchange="disable_lesion(event)" required >
 				<option value=0>0 - Si</option>
 				<option value=1 selected=true>1 - No</option>
 			</select>
 		</div>
 		
 <div>
-	<label for="intraoral_lesion_localizacion">Localización</label>
-	<select name="intraoral_lesion_localizacion" required >
+	<label for="lesion_localizacion">Localización</label>
+	<select name="lesion_localizacion" required >
 		
 	<option value=0>0 - Borde bermelión</option>
 	<option value=1>1 - Comisuras</option>
@@ -185,8 +201,8 @@
 
 		
 <div>
-	<label for="intraoral_lesion_dolor">Dolor</label>
-	<select name="intraoral_lesion_dolor" required >
+	<label for="lesion_dolor">Dolor</label>
+	<select name="lesion_dolor" required >
 		
 <option value=0 selected>0 - Si</option>
 <option value=1>1 - No</option>
@@ -196,8 +212,8 @@
 
 		
 <div>
-	<label for="intraoral_lesion_color">Color</label>
-	<select name="intraoral_lesion_color" required >
+	<label for="lesion_color">Color</label>
+	<select name="lesion_color" required >
 		
 	<option value=0>0 - Normal</option>
 	<option value=1>1 - Azul - Violeta</option>
@@ -210,8 +226,8 @@
 
 		
 <div>
-	<label for="intraoral_lesion_tamaño">Tamaño</label>
-	<select name="intraoral_lesion_tamaño" required >
+	<label for="lesion_tamaño">Tamaño</label>
+	<select name="lesion_tamaño" required >
 		
 	<option value=0>0 - 0-2mm</option>
 	<option value=1>1 - 3-5mm</option>
@@ -222,8 +238,8 @@
 
 		
 <div>
-	<label for="intraoral_lesion_consistencia">Consistencia</label>
-	<select name="intraoral_lesion_consistencia" required >
+	<label for="lesion_consistencia">Consistencia</label>
+	<select name="lesion_consistencia" required >
 		
 	<option value=0>0 - Blanda</option>
 	<option value=1>1 - Dura</option>
@@ -234,8 +250,8 @@
 
 		
 <div>
-	<label for="intraoral_lesion_morfologia">Morfologia</label>
-	<select name="intraoral_lesion_morfologia" required >
+	<label for="lesion_morfologia">Morfologia</label>
+	<select name="lesion_morfologia" required >
 		
 	<option value=0>0 - Plana</option>
 	<option value=1>1 - Elevada</option>
@@ -246,8 +262,8 @@
 </div>
 
 		<div>
-			<label for=intraoral_lesion_numero>Numero de Lesiones</label>
-			<select name=intraoral_lesion_numero required >
+			<label for=lesion_numero>Numero de Lesiones</label>
+			<select name=lesion_numero required >
 				<option value=0>0 - Unica</option>
 				<option value=1>1 - Multiples lesiones con iguales caracteristicas</option>
 				<option value=2>2 - Multiples lesiones con diferentes caracteristicas</option>
@@ -255,7 +271,7 @@
 		</div>
 		<script>
 			for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-				e.setAttribute("disabled", "true")
+				disable(e)
 		</script>
 
 	</div>
@@ -263,7 +279,7 @@
 	<div class=separator style=background-color:black></div>
 	<h2>Flurosis Dental</h2>
 	<span class=note>(A partir de los 6 años de edad)</span>
-	<select name=intraoral_flurosis required >
+	<select name=flurosis required >
 		<option value=0>0 - Normal</option>
 		<option value=1>1 - Dudosa</option>
 		<option value=2>2 - Muy leve</option>
@@ -2409,7 +2425,6 @@
 				<option value=1>1 - Necesita y no tiene</option>
 				<option value=2>2 - Tiene adecuada</option>
 				<option value=3>3 - Tiene inadecuada</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	
@@ -2421,7 +2436,6 @@
 				<option value=1>1 - Necesita y no tiene</option>
 				<option value=2>2 - Tiene adecuada</option>
 				<option value=3>3 - Tiene inadecuada</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	
@@ -2440,7 +2454,6 @@
 				<option value=1>1 - Prótesis parcial removible</option>
 				<option value=2>2 - Prótesis Total</option>
 				<option value=3>3 - Prótesis fija</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	
@@ -2451,7 +2464,6 @@
 				<option value=1>1 - Prótesis parcial removible</option>
 				<option value=2>2 - Prótesis Total</option>
 				<option value=3>3 - Prótesis fija</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	
@@ -2629,7 +2641,7 @@
 		</div>
 	
 	</div>
-	<input type=submit value="Enviar" />
+	<input type=submit value="Guardar" />
 </form>
 <script>
 	age_ranges = [
@@ -2645,14 +2657,6 @@
 		{query: '[name="intraoral_flurosis"]', min: 6},
 		{query: '#habitos :is(select, input)', max: 18}
 	]
-	function disable(e) {
-		let option = document.createElement("option")
-		option.value = "N"
-		option.textContent = "N - No Aplica"
-		e.appendChild(option)
-		e.value = "N"
-		e.setAttribute("disabled", "true")
-	}
 	for (let r of age_ranges)
 		for (let el of document.querySelectorAll(r.query))
 			disable(el)
@@ -2667,13 +2671,8 @@
 					disable(el)
 				continue
 			}
-			for (let el of document.querySelectorAll(range.query)) {
-				el.value = "0"
-				null_options = el.querySelectorAll('option[value="N"]')
-				for (let o of null_options)
-					o.remove()
-				el.removeAttribute("disabled")
-			}
+			for (let el of document.querySelectorAll(range.query))
+				enable(el)
 		}
 	})
 </script>

@@ -1,4 +1,4 @@
-package app.webview;
+package app.facoluz_evaluacion_bucal;
 
 import android.content.res.AssetManager;
 import android.database.Cursor;
@@ -62,13 +62,13 @@ class Handler {
 			cursor.moveToNext();
 			variables.put("count", cursor.getString(0));
 		} catch(Exception e) {
-			Log.e("webview", "[UpdateCount] " + e.toString() + "\n" + Log.getStackTraceString(e));
+			Log.e("facoluz_evaluacion_bucal", "[UpdateCount] " + e.toString() + "\n" + Log.getStackTraceString(e));
 		}
 	}
 	@JavascriptInterface
 	public void export() {
 		try {
-			URL url = new URL(Global.apiUrl + "/receiverData");
+			URL url = new URL(Global.apiUrl + "/recieverData");
 			HttpURLConnection http = (HttpURLConnection) url.openConnection();
 			http.setRequestMethod("POST");
 			http.setRequestProperty("Content-Type", "application/json");
@@ -90,13 +90,13 @@ class Handler {
 			out.flush();
 			out.close();
 			int ret = http.getResponseCode();
-			Log.i("webview", "[export] HTTP Response: " + ret);
+			Log.i("facoluz_evaluacion_bucal", "[export] HTTP Response: " + ret);
 			if (ret != HttpURLConnection.HTTP_OK) {
 				activity.runOnUiThread(() -> Toast.makeText(activity, "Error en el servidor al subir los datos: " + ret, Toast.LENGTH_LONG).show());
 				return;
 			}
 		} catch(Exception e) {
-			Log.e("webview", "[export] " + e.toString() + "\n" + Log.getStackTraceString(e));
+			Log.e("facoluz_evaluacion_bucal", "[export] " + e.toString() + "\n" + Log.getStackTraceString(e));
 			activity.runOnUiThread(() -> Toast.makeText(activity, "No se pudieron exportar los datos: " + e.toString(), Toast.LENGTH_LONG).show());
 			return;
 		}
@@ -104,11 +104,11 @@ class Handler {
 	}
 	@JavascriptInterface
 	public void log(String msg) {
-		Log.d("webview", msg);
+		Log.d("facoluz_evaluacion_bucal", msg);
 	}
 	@JavascriptInterface
 	public String getvar(String key) {
-		Log.i("webview", "[GETVAR] " + key + " = " + variables.get(key));
+		Log.i("facoluz_evaluacion_bucal", "[GETVAR] " + key + " = " + variables.get(key));
 		return variables.get(key);
 	}
 	@JavascriptInterface
@@ -126,8 +126,8 @@ class Handler {
 			e.printStackTrace();
 			return;
 		}
-		Log.i("webview", "[POST] Got method: " + method);
-		Log.i("webview", "[POST] Got form: " + form.toString());
+		Log.i("facoluz_evaluacion_bucal", "[POST] Got method: " + method);
+		Log.i("facoluz_evaluacion_bucal", "[POST] Got form: " + form.toString());
 		try {
 			if (method.equals("form")) {
 				form.put("examinador", variables.get("name"));
@@ -135,21 +135,24 @@ class Handler {
 				ContentValues vals = new ContentValues();
 				for (Map.Entry<String, String> entry : form.entrySet())
 					vals.put(entry.getKey(), entry.getValue());
+				db.beginTransaction();
 				db.insert("formularios", null, vals);
+				db.setTransactionSuccessful();
+				db.endTransaction();
 				updateCount();
 				activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue guardado exitosamente", Toast.LENGTH_LONG).show());
 				activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 			}
 			else if(method.equals("login")) {
-				Log.i("webview", "[POST] Login start");
+				Log.i("facoluz_evaluacion_bucal", "[POST] Login start");
 				String password = sha1(form.get("password"));
 				if (password == null) {
 					String msg = "No se encontro el algoritmo de hash SHA-1";
-					Log.e("webview", msg);
+					Log.e("facoluz_evaluacion_bucal", msg);
 					activity.runOnUiThread(() -> Toast.makeText(activity, msg, Toast.LENGTH_LONG).show());
 					return;
 				}
-				Log.i("webview", "[POST] Password hash: " + password);
+				Log.i("facoluz_evaluacion_bucal", "[POST] Password hash: " + password);
 				Cursor cursor = db.rawQuery("select nombre from usuarios where cedula = ? and password = ?", new String[] {form.get("cedula"), password});
 				if (cursor.getCount() != 0) {
 					cursor.moveToNext();
@@ -161,7 +164,7 @@ class Handler {
 					activity.runOnUiThread(() -> Toast.makeText(activity, "La cedula o claves son incorrectas.", Toast.LENGTH_LONG).show());
 			}
 		} catch (Exception e) {
-			Log.e("webview", "[POST] " + e.toString() + "\n" + Log.getStackTraceString(e));
+			Log.e("facoluz_evaluacion_bucal", "[POST] " + e.toString() + "\n" + Log.getStackTraceString(e));
 		}
 	}
 }
@@ -190,26 +193,33 @@ public class Main extends Activity {
 			}
 			read.close();
 			
-			JSONArray result = new JSONArray(buf.toString());
+			JSONObject body = new JSONObject(buf.toString());
+			JSONArray result = body.getJSONArray("dataUsers");
+			db.beginTransaction();
 			db.execSQL("delete from usuarios");
 			for (int i = 0; i < result.length(); i++) {
 				JSONObject user = result.getJSONObject(i);
-				db.execSQL("insert into usuarios(cedula, nombre, password) values(?, ?, ?)", new Object[] {
+				String sql = "insert into usuarios(cedula, nombre, password) values(?, ?, ?)";
+				Log.i("facoluz_evaluacion_bucal", "[syncUsers] Exec SQL: '" + sql + "'");
+				Log.i("facoluz_evaluacion_bucal", "[syncUsers] Arguments: '" + user.toString() + "'");
+				db.execSQL(sql, new Object[] {
 					       new Integer(user.getInt("cedula")),
-					       user.getString("name"),
+					       user.getString("nombre"),
 					       user.getString("password")
 				});
 			}
+			db.setTransactionSuccessful();
 		}
 		catch(SocketTimeoutException e) {
-			Log.i("webview", "[syncUsers] Timeout");
+			Log.i("facoluz_evaluacion_bucal", "[syncUsers] Timeout");
 		}
 		catch(ConnectException e) {
-			Log.i("webview", "[syncUsers] Can't Connect");
+			Log.i("facoluz_evaluacion_bucal", "[syncUsers] Can't Connect");
 		}
 		catch(Exception e) {
-			Log.e("webview", "[syncUsers] Error: " + e.toString() + "\n" + Log.getStackTraceString(e));
+			Log.e("facoluz_evaluacion_bucal", "[syncUsers] Error: " + e.toString() + "\n" + Log.getStackTraceString(e));
 		}
+		db.endTransaction();
 	}
 	
 	@Override
@@ -224,10 +234,10 @@ public class Main extends Activity {
 				OutputStream dbfile_stream = new FileOutputStream(dbfile);
 				Copy(dbasset, dbfile_stream);
 			} catch (IOException io) {
-				Log.e("webview", "Fatal. Could not copy to " + dbfile.getPath());
+				Log.e("facoluz_evaluacion_bucal", "Fatal. Could not copy to " + dbfile.getPath());
 			}
 		}
-		Log.i("webview", "Opening Database on " + dbfile.getPath());
+		Log.i("facoluz_evaluacion_bucal", "Opening Database on " + dbfile.getPath());
 		db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
 		Thread sync = new Thread(() -> updateUsers(db));
 		sync.start();
@@ -244,8 +254,8 @@ public class Main extends Activity {
 		web.loadUrl("file:///android_asset/login.html");
 	}
 	@Override
-	protected void onStop() {
-		super.onStop();
+	protected void onDestroy() {
+		super.onDestroy();
 		if(db != null)
 			db.close();
 	}

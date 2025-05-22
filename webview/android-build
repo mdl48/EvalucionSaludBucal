@@ -107,7 +107,7 @@ compile_sources() {
 }
 
 compile_resources() {
-	files=$(find $RESDIR -type f -name "*.xml" -and -not -name "AndroidManifest.xml")
+	files=$(find $RESDIR -type f \( -name "*.xml" -o -name "*.png" \) -and -not -path "*assets/*" -and -not -name "AndroidManifest.xml")
 	if test -z "$files"; then return; fi
 	aapt2 compile $files -o "$OBJDIR/res.zip"
 	aapt2 link --manifest $MANIFEST -I $ANDROID_JAR \
