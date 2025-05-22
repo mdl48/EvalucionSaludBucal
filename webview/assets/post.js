@@ -1,4 +1,4 @@
-if (Android) {
+if (Android !== undefined) {
 	Android.log("[JS] Form submit override")
 	for (let form of document.querySelectorAll("form")) {
 		Android.log(`[JS] Override form: ${form}`)

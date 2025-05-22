@@ -49,6 +49,7 @@
 </head>
 <body>
 <form method=POST>
+	<a href="welcome.html">Volver al Menu</a>
 	<h1>Datos del Paciente</h1>
 	<div class=options>
 		<div>
@@ -110,16 +111,7 @@
 		</div>
 	</div>
 	<h1>Evaluación Extraoral</h1>
-<!--
-	<div>
-		h1 Examen Extraoral
-		<input type=checkbox name=extraoral_normal  required />
-		<input type=checkbox name=extraoral_piel_y_mucosa  required />
-		<input type=checkbox name=extraoral_nodulos_agrandados  required />
-		<input type=checkbox name=extraoral_asimetria_facial  required />
-		<input type=checkbox name=extraoral_no_registrado  required />
-	</div>
--->
+
 	<h2>Evaluación de la Articulación Temporomaxilar</h2>
 	<span class=note>(A partir de los 12 años de edad)</span>
 	<div id=temporomaxilar class=options>
@@ -157,7 +149,7 @@
 	<div id=lesion class=options>
 		<script>
 			function disable_lesion(e) {
-				if (e.target.value != "2") {
+				if (e.target.value == 0) {
 					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
 						e.removeAttribute("disabled")
 					return;
@@ -167,8 +159,8 @@
 			}
 		</script>
 		<div>
-		<label for=intraoral_lesion>Hay Lesion</label>
-			<select name=intraoral_lesion onchange="disable_lesion(event)" required >
+		<label>Hay Lesion</label>
+			<select onchange="disable_lesion(event)" required >
 				<option value=0>0 - Si</option>
 				<option value=1 selected=true>1 - No</option>
 			</select>
@@ -280,195 +272,7 @@
 		<option value=5>5 - Severa</option>
 	</select>
 	
-<!--
-	<table>
-		<tbody>
-			
-			<tr>
-			
-				<th>14</th>
-			
-				<th>13</th>
-			
-				<th>12</th>
-			
-				<th>11</th>
-			
-				<th>21</th>
-			
-				<th>22</th>
-			
-				<th>23</th>
-			
-				<th>24</th>
-			
-			</tr>
-			<tr>
-			
-				<select name=intraoral_opacidades_14 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
 
-				</select>
-			
-				<select name=intraoral_opacidades_13 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_12 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_11 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_21 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_22 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_23 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-				<select name=intraoral_opacidades_24 required >
-					
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-				</select>
-			
-			</tr>
-			<tr>
-				<th>
-					<select name=intraoral_opacidades_46 required >
-						
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-					</select>
-				</th>
-				<td cols=6></td>
-				<th>
-					<select name=intraoral_opacidades_36 required >
-						
-	<option value=0>0 - Normal</option>
-	<option value=1>1 - Opacidad delimitada</option>
-	<option value=2>2 - Opacidad difusa</option>
-	<option value=3>3 - Hipoplasia</option>
-	<option value=4>4 - Otros defectos</option>
-	<option value=5>5 - Opacidad delimitada y difusa</option>
-	<option value=6>6 - Opacidad delimitada e hipoplasia</option>
-	<option value=7>7 - Opacidad difusa e hipoplasia</option>
-	<option value=8>8 - Las tres condiciones</option>
-	<option value=9>9 - No registrado</option>
-
-					</select>
-				</th>
-			</tr>
-			<tr>
-				<th>46</th>
-				<td cols=6></td>
-				<th>36</th>
-			</tr>
-		</tbody>
-	</table>
--->
 	<div class=separator style=background-color:black></div>
 	<h2>Indice de Higiene Bucal Simplificado (IHB-S)</h2>
 	<span class=note>(A partir de los 15 años de edad)</span>
@@ -2658,22 +2462,7 @@
 	<h2>Habitos</h2>
 	<span class=note>(Hasta los 18 años)</span>
 	<div class=options id="habitos">
-		<div>
-			<label>Tiene</label>
-			<script>
-				function habitos_read_only(x) {
-					for (let e of document.querySelectorAll('[name^=\"habitos_\"')) {
-						if (!x.target.checked) {
-							e.setAttribute("disabled", "true")
-							e.value = "0"
-						}
-						else
-							e.removeAttribute("disabled")
-					}
-				}
-			</script>
-			<input type=checkbox required value=true onchange="habitos_read_only(event)" />
-		</div>
+
 		<div>
 			<label for=habitos_bruxismo>Bruxismo</label>
 			<select name=habitos_bruxismo  required >
@@ -2704,15 +2493,6 @@
 		<div>
 			<label for=habitos_succion_digital>Succión Digital</label>
 			<select name=habitos_succion_digital  required >
-				
-<option value=0 selected>0 - Ausencia</option>
-<option value=1>1 - Presencia</option>
-
-			</select>
-		</div>
-		<div>
-			<label for=habitos_no_registrado>No Registrado</label>
-			<select name=habitos_no_registrado  required >
 				
 <option value=0 selected>0 - Ausencia</option>
 <option value=1>1 - Presencia</option>

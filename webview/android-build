@@ -100,7 +100,7 @@ compile_sources() {
 	if test "$OBJDIR" != . -a ! -d "$OBJDIR"; then mkdir -p $OBJDIR; fi
 	srcs=$(find_sources)
 	if test -z "$srcs"; then return; fi
-	(unset IFS; ${JAVA_HOME:-}javac $JAVA_CFLAGS -cp "$ANDROID_JAR" -d "$OBJDIR" $srcs)
+	(unset IFS; $JAVAC $JAVA_CFLAGS -cp "$ANDROID_JAR" -d "$OBJDIR" $srcs)
 	# TODO: Maybe we should just look for the ones that match $src*.class
 	d8 --classpath "$ANDROID_JAR" --min-api $MINAPI $(find "$OBJDIR" -type f -name "*.class")
 	mv classes.dex $OBJDIR || true
@@ -170,9 +170,15 @@ set_package
 set_files_and_dirs
 JAVA_CFLAGS=${JAVA_CFLAGS:-"--release 8 -Xlint:-options"}
 JAVA_HOME=${JAVA_HOME:-}
-DEFAULT_JAVA='/usr/lib/jvm/java-11-openjdk/bin/'
+DEFAULT_JAVA='/usr/lib/jvm/java-11-openjdk/'
 if test -z "$JAVA_HOME" -a -d $DEFAULT_JAVA; then
 	JAVA_HOME=$DEFAULT_JAVA
+fi
+
+if test -n "$JAVA_HOME"; then
+	JAVAC="$JAVA_HOME/bin/javac";
+else
+	JAVAC=javac
 fi
 
 if test $# -eq 0; then build; exit 0; fi

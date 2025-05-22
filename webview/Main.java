@@ -24,6 +24,10 @@ import org.json.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+class Global {
+	public static String apiUrl = "http://localhost:8080";
+}
+
 class Handler {
 	SQLiteDatabase db;
 	WebView web;
@@ -64,7 +68,7 @@ class Handler {
 	@JavascriptInterface
 	public void export() {
 		try {
-			URL url = new URL("http://localhost:10000/");
+			URL url = new URL(Global.apiUrl + "/receiverData");
 			HttpURLConnection http = (HttpURLConnection) url.openConnection();
 			http.setRequestMethod("POST");
 			http.setRequestProperty("Content-Type", "application/json");
@@ -133,7 +137,7 @@ class Handler {
 					vals.put(entry.getKey(), entry.getValue());
 				db.insert("formularios", null, vals);
 				updateCount();
-				activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue enviado exitosamente", Toast.LENGTH_LONG).show());
+				activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue guardado exitosamente", Toast.LENGTH_LONG).show());
 				activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 			}
 			else if(method.equals("login")) {
@@ -171,6 +175,42 @@ public class Main extends Activity {
 			out.write(buf, 0, len);
 		}
 	}
+	public static void updateUsers(SQLiteDatabase db) {
+		try {
+			URL url = new URL(Global.apiUrl + "/syncUsers");
+			HttpURLConnection http = (HttpURLConnection) url.openConnection();
+			// http.setConnectionTimeout(1000);
+			InputStream in = http.getInputStream();
+			BufferedReader read = new BufferedReader(new InputStreamReader(in, "utf-8"));
+			String line = read.readLine();
+			StringBuilder buf = new StringBuilder();
+			while(line != null) {
+				buf.append(line).append("\n");
+				line = read.readLine();
+			}
+			read.close();
+			
+			JSONArray result = new JSONArray(buf.toString());
+			db.execSQL("delete from usuarios");
+			for (int i = 0; i < result.length(); i++) {
+				JSONObject user = result.getJSONObject(i);
+				db.execSQL("insert into usuarios(cedula, nombre, password) values(?, ?, ?)", new Object[] {
+					       new Integer(user.getInt("cedula")),
+					       user.getString("name"),
+					       user.getString("password")
+				});
+			}
+		}
+		catch(SocketTimeoutException e) {
+			Log.i("webview", "[syncUsers] Timeout");
+		}
+		catch(ConnectException e) {
+			Log.i("webview", "[syncUsers] Can't Connect");
+		}
+		catch(Exception e) {
+			Log.e("webview", "[syncUsers] Error: " + e.toString() + "\n" + Log.getStackTraceString(e));
+		}
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -189,11 +229,8 @@ public class Main extends Activity {
 		}
 		Log.i("webview", "Opening Database on " + dbfile.getPath());
 		db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
-		// if (internet 1s) {
-		// 	db.delete("usuarios", ); // TODO:
-		// 	http
-		// 	db.insert();
-		// }
+		Thread sync = new Thread(() -> updateUsers(db));
+		sync.start();
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
@@ -209,8 +246,8 @@ public class Main extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		// if(db != null)
-		// 	db.close();
+		if(db != null)
+			db.close();
 	}
 }
 
