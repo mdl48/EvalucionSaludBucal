@@ -407,32 +407,48 @@
 	<span class=note>(A partir de los 5 años de edad)</span>
 	<div id=lesion class=options>
 		<script>
+			function disable(e) {
+				let option = document.createElement("option")
+				option.value = "N"
+				option.textContent = "N - No Aplica"
+				e.appendChild(option)
+				e.value = "N"
+				e.setAttribute("disabled", "true")
+			}
+			function enable(e) {
+				e.value = "0"
+				null_options = e.querySelectorAll('option[value="N"]')
+				for (let o of null_options)
+					o.remove()
+				e.removeAttribute("disabled")
+			}
+			
 			function disable_lesion(e) {
 				if (e.target.value == 0) {
-					for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-						e.removeAttribute("disabled")
+					for (let e of document.querySelectorAll('[name^="lesion_"]'))
+						enable(e)
 					return;
 				}
-				for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-					e.setAttribute("disabled", "true")
+				for (let e of document.querySelectorAll('[name^="lesion_"]'))
+					disable(e)
 			}
 		</script>
 		<div>
 		<label>Hay Lesion</label>
-			<select onchange="disable_lesion(event)" required >
+			<select name=lesion onchange="disable_lesion(event)" required >
 				<option value=0>0 - Si</option>
 				<option value=1 selected=true>1 - No</option>
 			</select>
 		</div>
-		{{ select("Localización", "intraoral_lesion_localizacion", intraoral_localizacion) }}
-		{{ select("Dolor", "intraoral_lesion_dolor", si_no) }}
-		{{ select("Color", "intraoral_lesion_color", intraoral_color) }}
-		{{ select("Tamaño", "intraoral_lesion_tamaño", intraoral_tamaño) }}
-		{{ select("Consistencia", "intraoral_lesion_consistencia", intraoral_consistencia) }}
-		{{ select("Morfologia", "intraoral_lesion_morfologia", intraoral_morfologia) }}
+		{{ select("Localización", "lesion_localizacion", intraoral_localizacion) }}
+		{{ select("Dolor", "lesion_dolor", si_no) }}
+		{{ select("Color", "lesion_color", intraoral_color) }}
+		{{ select("Tamaño", "lesion_tamaño", intraoral_tamaño) }}
+		{{ select("Consistencia", "lesion_consistencia", intraoral_consistencia) }}
+		{{ select("Morfologia", "lesion_morfologia", intraoral_morfologia) }}
 		<div>
-			<label for=intraoral_lesion_numero>Numero de Lesiones</label>
-			<select name=intraoral_lesion_numero required >
+			<label for=lesion_numero>Numero de Lesiones</label>
+			<select name=lesion_numero required >
 				<option value=0>0 - Unica</option>
 				<option value=1>1 - Multiples lesiones con iguales caracteristicas</option>
 				<option value=2>2 - Multiples lesiones con diferentes caracteristicas</option>
@@ -440,7 +456,7 @@
 		</div>
 		<script>
 			for (let e of document.querySelectorAll('[name^="intraoral_lesion_"]'))
-				e.setAttribute("disabled", "true")
+				disable(e)
 		</script>
 
 	</div>
@@ -448,7 +464,7 @@
 	<div class=separator style=background-color:black></div>
 	<h2>Flurosis Dental</h2>
 	<span class=note>(A partir de los 6 años de edad)</span>
-	<select name=intraoral_flurosis required >
+	<select name=flurosis required >
 		<option value=0>0 - Normal</option>
 		<option value=1>1 - Dudosa</option>
 		<option value=2>2 - Muy leve</option>
@@ -560,7 +576,6 @@
 				<option value=1>1 - Necesita y no tiene</option>
 				<option value=2>2 - Tiene adecuada</option>
 				<option value=3>3 - Tiene inadecuada</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	{% endfor %}
@@ -579,7 +594,6 @@
 				<option value=1>1 - Prótesis parcial removible</option>
 				<option value=2>2 - Prótesis Total</option>
 				<option value=3>3 - Prótesis fija</option>
-				<option value=9>9 - No registrado</option>
 			</select>
 		</div>
 	{% endfor %}
@@ -729,14 +743,6 @@
 		{query: '[name="intraoral_flurosis"]', min: 6},
 		{query: '#habitos :is(select, input)', max: 18}
 	]
-	function disable(e) {
-		let option = document.createElement("option")
-		option.value = "N"
-		option.textContent = "N - No Aplica"
-		e.appendChild(option)
-		e.value = "N"
-		e.setAttribute("disabled", "true")
-	}
 	for (let r of age_ranges)
 		for (let el of document.querySelectorAll(r.query))
 			disable(el)
@@ -751,13 +757,8 @@
 					disable(el)
 				continue
 			}
-			for (let el of document.querySelectorAll(range.query)) {
-				el.value = "0"
-				null_options = el.querySelectorAll('option[value="N"]')
-				for (let o of null_options)
-					o.remove()
-				el.removeAttribute("disabled")
-			}
+			for (let el of document.querySelectorAll(range.query))
+				enable(el)
 		}
 	})
 </script>
