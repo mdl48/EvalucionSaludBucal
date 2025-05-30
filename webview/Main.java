@@ -25,7 +25,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 class Global {
-	public static String apiUrl = "http://localhost:8080";
+	public static String apiUrl = "http://10.3.24.33:8080";
 }
 
 class Handler {
@@ -135,9 +135,16 @@ class Handler {
 				ContentValues vals = new ContentValues();
 				for (Map.Entry<String, String> entry : form.entrySet())
 					vals.put(entry.getKey(), entry.getValue());
-				db.beginTransaction();
-				db.insert("formularios", null, vals);
-				db.setTransactionSuccessful();
+				try {
+					db.beginTransaction();
+					db.insert("formularios", null, vals);
+					db.setTransactionSuccessful();
+				}
+				catch(Exception e) {
+					activity.runOnUiThread(() -> Toast.makeText(activity, "Hubo un error al guardar el formulario", Toast.LENGTH_LONG).show());
+					db.endTransaction();
+					return;
+				}
 				db.endTransaction();
 				updateCount();
 				activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue guardado exitosamente", Toast.LENGTH_LONG).show());
@@ -178,7 +185,7 @@ public class Main extends Activity {
 			out.write(buf, 0, len);
 		}
 	}
-	public static void updateUsers(SQLiteDatabase db) {
+	public static void updateUsers(Activity activity, SQLiteDatabase db) {
 		try {
 			URL url = new URL(Global.apiUrl + "/syncUsers");
 			HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -196,19 +203,25 @@ public class Main extends Activity {
 			JSONObject body = new JSONObject(buf.toString());
 			JSONArray result = body.getJSONArray("dataUsers");
 			db.beginTransaction();
-			db.execSQL("delete from usuarios");
-			for (int i = 0; i < result.length(); i++) {
-				JSONObject user = result.getJSONObject(i);
-				String sql = "insert into usuarios(cedula, nombre, password) values(?, ?, ?)";
-				Log.i("facoluz_evaluacion_bucal", "[syncUsers] Exec SQL: '" + sql + "'");
-				Log.i("facoluz_evaluacion_bucal", "[syncUsers] Arguments: '" + user.toString() + "'");
-				db.execSQL(sql, new Object[] {
-					       new Integer(user.getInt("cedula")),
-					       user.getString("nombre"),
-					       user.getString("password")
-				});
+			try {
+				db.execSQL("delete from usuarios");
+				for (int i = 0; i < result.length(); i++) {
+					JSONObject user = result.getJSONObject(i);
+					String sql = "insert into usuarios(cedula, nombre, password) values(?, ?, ?)";
+					Log.i("facoluz_evaluacion_bucal", "[syncUsers] Exec SQL: '" + sql + "'");
+					Log.i("facoluz_evaluacion_bucal", "[syncUsers] Arguments: '" + user.toString() + "'");
+					db.execSQL(sql, new Object[] {
+						       new Integer(user.getInt("cedula")),
+						       user.getString("nombre"),
+						       user.getString("password")
+					});
+				}
+				db.setTransactionSuccessful();
 			}
-			db.setTransactionSuccessful();
+			catch(Exception e) {
+				activity.runOnUiThread(() -> Toast.makeText(activity, "Error en la base de datos al sincronizar usuarios.", Toast.LENGTH_LONG).show());
+			}
+			db.endTransaction();
 		}
 		catch(SocketTimeoutException e) {
 			Log.i("facoluz_evaluacion_bucal", "[syncUsers] Timeout");
@@ -219,7 +232,6 @@ public class Main extends Activity {
 		catch(Exception e) {
 			Log.e("facoluz_evaluacion_bucal", "[syncUsers] Error: " + e.toString() + "\n" + Log.getStackTraceString(e));
 		}
-		db.endTransaction();
 	}
 	
 	@Override
@@ -239,7 +251,7 @@ public class Main extends Activity {
 		}
 		Log.i("facoluz_evaluacion_bucal", "Opening Database on " + dbfile.getPath());
 		db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
-		Thread sync = new Thread(() -> updateUsers(db));
+		Thread sync = new Thread(() -> updateUsers(this, db));
 		sync.start();
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
