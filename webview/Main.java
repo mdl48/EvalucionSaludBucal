@@ -59,7 +59,7 @@ class Handler {
 	}
 	public void updateCount() {
 		try {
-			Cursor cursor = db.rawQuery("select count(*) from formularios where exportado = 0", new String[] {});
+			Cursor cursor = db.rawQuery("select count(*) from formularios", new String[] {});
 			cursor.moveToNext();
 			variables.put("count", cursor.getString(0));
 		} catch(Exception e) {
@@ -105,7 +105,8 @@ class Handler {
 		}
 		activity.runOnUiThread(() -> Toast.makeText(activity, "Los datos fueron exportados exitosamente", Toast.LENGTH_LONG).show());
 		db.execSQL("delete from formularios");
-		updateCount();
+		setvar("count", "0");
+		activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 	}
 	@JavascriptInterface
 	public void log(String msg) {
