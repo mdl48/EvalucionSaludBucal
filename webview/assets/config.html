@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1, width=device-width">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+	<form method="POST">
+		<h1>Configuración</h1>
+		<div>
+			<input name=code placeholder="Codigo de Sincronización" content=code required />
+		</div>
+		<input type=submit value="Ingresar" />
+		<a href="login.html">Volver al Login</a>
+	</form>
+	<script>[...document.querySelectorAll("[content]")].forEach(x => x.value = Android.getvar(x.getAttribute("content")))</script>
+	<script type="text/javascript" src="post.js"></script>
+</body>

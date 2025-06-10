@@ -8,8 +8,8 @@ create table formularios(
 	genero text not null,
 	edad integer not null,
 	estado text not null,
-	ednia text not null,
-	ednia_zulia text,
+	etnia text not null,
+	etnia_zulia text,
 	municipio text not null,
 	parroquia text not null,
 
@@ -177,7 +177,7 @@ create table usuarios(
 );
 
 create table configuracion(
-	ip text
+	code text
 );
 insert into configuracion values('');
 insert into usuarios values(1, 'Admin', '356a192b7913b04c54574d18c28d46e6395428ab', '', '');
