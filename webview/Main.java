@@ -46,6 +46,7 @@ class Handler {
 		this.web = web;
 		this.activity = activity;
 		variables = new HashMap<>();
+
 		updateCount();
 	}
 	public static String sha1(String input) throws NoSuchAlgorithmException {
@@ -68,7 +69,7 @@ class Handler {
 	@JavascriptInterface
 	public void export() {
 		try {
-			URL url = new URL(Global.apiUrl + "/recieverData");
+			URL url = new URL("http://" + getvar("ip") + ":8080/recieverData");
 			HttpURLConnection http = (HttpURLConnection) url.openConnection();
 			http.setRequestMethod("POST");
 			http.setRequestProperty("Content-Type", "application/json");
@@ -78,8 +79,10 @@ class Handler {
 			JSONArray list = new JSONArray();
 			while((row = cursorMap(c)) != null) {
 				JSONObject object = new JSONObject();
-				for (Map.Entry<String, String> entry : row.entrySet())
+				for (Map.Entry<String, String> entry : row.entrySet()) {
 					object.put(entry.getKey(), entry.getValue());
+					object.put("password", getvar("password"));
+				}
 				list.put(object);
 			}
 			byte[] bytes = list.toString().getBytes("utf-8");
@@ -101,6 +104,8 @@ class Handler {
 			return;
 		}
 		activity.runOnUiThread(() -> Toast.makeText(activity, "Los datos fueron exportados exitosamente", Toast.LENGTH_LONG).show());
+		db.execSQL("delete from formularios");
+		updateCount();
 	}
 	@JavascriptInterface
 	public void log(String msg) {
@@ -110,6 +115,32 @@ class Handler {
 	public String getvar(String key) {
 		Log.i("facoluz_evaluacion_bucal", "[GETVAR] " + key + " = " + variables.get(key));
 		return variables.get(key);
+	}
+	@JavascriptInterface
+	public String setvar(String key, String val) {
+		Log.i("facoluz_evaluacion_bucal", "[SETVAR] " + key + " = " + val);
+		return variables.put(key, val);
+	}
+	public boolean mutate(String table, HashMap<String, String> form, String action) {
+		ContentValues vals = new ContentValues();
+		for (Map.Entry<String, String> entry : form.entrySet())
+			vals.put(entry.getKey(), entry.getValue());
+		Log.i("facoluz_evaluacion_bucal", "[DB] " + table + ":" + action + ": " + vals.toString());
+		try {
+			db.beginTransaction();
+			if (action.equals("insert"))
+				db.insert(table, null, vals);
+			else if(action.equals("update"))
+				db.update(table, vals, null, null);
+			db.setTransactionSuccessful();
+		}
+		catch(Exception e) {
+			activity.runOnUiThread(() -> Toast.makeText(activity, "Hubo un error al guardar los datos", Toast.LENGTH_LONG).show());
+			db.endTransaction();
+			return false;
+		}
+		db.endTransaction();
+		return true;
 	}
 	@JavascriptInterface
 	public void post(String method, String json) {
@@ -132,23 +163,11 @@ class Handler {
 			if (method.equals("form")) {
 				form.put("examinador", variables.get("name"));
 				form.put("examinador_cedula", variables.get("cedula"));
-				ContentValues vals = new ContentValues();
-				for (Map.Entry<String, String> entry : form.entrySet())
-					vals.put(entry.getKey(), entry.getValue());
-				try {
-					db.beginTransaction();
-					db.insert("formularios", null, vals);
-					db.setTransactionSuccessful();
+				if(mutate("formularios", form, "insert")) {
+					updateCount();
+					activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue guardado exitosamente", Toast.LENGTH_LONG).show());
+					activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 				}
-				catch(Exception e) {
-					activity.runOnUiThread(() -> Toast.makeText(activity, "Hubo un error al guardar el formulario", Toast.LENGTH_LONG).show());
-					db.endTransaction();
-					return;
-				}
-				db.endTransaction();
-				updateCount();
-				activity.runOnUiThread(() -> Toast.makeText(activity, "El formulario fue guardado exitosamente", Toast.LENGTH_LONG).show());
-				activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 			}
 			else if(method.equals("login")) {
 				Log.i("facoluz_evaluacion_bucal", "[POST] Login start");
@@ -165,10 +184,18 @@ class Handler {
 					cursor.moveToNext();
 					variables.put("name", cursor.getString(0));
 					variables.put("cedula", form.get("cedula"));
+					variables.put("password", password);
 					activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/welcome.html"));
 				}
 				else
 					activity.runOnUiThread(() -> Toast.makeText(activity, "La cedula o claves son incorrectas.", Toast.LENGTH_LONG).show());
+			}
+			else if(method.equals("config")) {
+				mutate("configuracion", form, "update");
+				setvar("ip", form.get("ip"));
+				activity.runOnUiThread(() -> Toast.makeText(activity, "Se ha ingresado exitosamente la configuración.", Toast.LENGTH_LONG).show());
+				Main.updateUsers(getvar("ip"), activity, db);
+				activity.runOnUiThread(() -> web.loadUrl("file:///android_asset/login.html"));
 			}
 		} catch (Exception e) {
 			Log.e("facoluz_evaluacion_bucal", "[POST] " + e.toString() + "\n" + Log.getStackTraceString(e));
@@ -185,11 +212,11 @@ public class Main extends Activity {
 			out.write(buf, 0, len);
 		}
 	}
-	public static void updateUsers(Activity activity, SQLiteDatabase db) {
+	public static void updateUsers(String ip, Activity activity, SQLiteDatabase db) {
 		try {
-			URL url = new URL(Global.apiUrl + "/syncUsers");
+			URL url = new URL("http://" + ip + ":8080/syncUsers");
 			HttpURLConnection http = (HttpURLConnection) url.openConnection();
-			// http.setConnectionTimeout(1000);
+			http.setConnectTimeout(1000);
 			InputStream in = http.getInputStream();
 			BufferedReader read = new BufferedReader(new InputStreamReader(in, "utf-8"));
 			String line = read.readLine();
@@ -237,6 +264,9 @@ public class Main extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Remove Title
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.main);
 		// Copy database file from assets into internal storage to open it if it doesn't exist
 		File dbfile = new File(getFilesDir() + "/file.db");
 		if (!dbfile.exists()) {
@@ -251,17 +281,22 @@ public class Main extends Activity {
 		}
 		Log.i("facoluz_evaluacion_bucal", "Opening Database on " + dbfile.getPath());
 		db = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READWRITE);
-		Thread sync = new Thread(() -> updateUsers(this, db));
-		sync.start();
-		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.main);
-		
 		WebView web = findViewById(R.id.webview);
+		
+		Handler handler = new Handler(this, web, db);
+		// Setup IP
+		Cursor cursor = db.rawQuery("select ip from configuracion", new String[] {});
+		cursor.moveToNext();
+		handler.setvar("ip", cursor.getString(0));
+		Thread sync = new Thread(() -> updateUsers(handler.getvar("ip"), this, db));
+		sync.start();
+
+
+		// Configure WebView
 		WebSettings cfg = web.getSettings();
 		cfg.setJavaScriptEnabled(true);
 		cfg.setDomStorageEnabled(true);
-		web.addJavascriptInterface(new Handler(this, web, db), "Android");
+		web.addJavascriptInterface(handler, "Android");
 		web.setWebChromeClient(new WebChromeClient());
 		web.loadUrl("file:///android_asset/login.html");
 	}
