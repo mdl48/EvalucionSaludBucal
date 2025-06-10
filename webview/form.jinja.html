@@ -58,7 +58,7 @@
 	<option value=5>5 - Piso de boca</option>
 	<option value=6>6 - Lengua</option>
 	<option value=7>7 - Paladar duro y/o blando</option>
-	<option value=8>8 - Bordes alveolares</option>
+	<option value=9>9 - Bordes alveolares</option>
 {% endmacro %}
 
 {% macro intraoral_color() %}
@@ -144,7 +144,7 @@
 	<option value="0">0 - Sano</option>
 	<option value="1">1 - Hemorragia</option>
 	<option value="2">2 - Cálculo</option>
-	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sondA parcialmente visible)</option>
+	<option value="3">3 - Bolsa de 4-5 mm (Banda negra de la sonda parcialmente visible)</option>
 	<option value="4">4 - Bolsa de 6 mm o más (Banda negra de la sonda Invisible)</option>
 	<option value="5">5 - Sextante excluido (-2 dientes)</option>
 	<option value="9">9 - Edentulo</option>
@@ -340,8 +340,27 @@
 			<input id=edad name=edad type=number pattern="[1-9][0-9]*" required />
 		</div>
 		<div>
+			<label for=etnia>Etnia</label>
+			<select id=etnia name=etnia>
+				<option value="1">1 - Criollo</option>
+				<option value="2">2 - Afrodescendiente</option>
+				<option value="3">3 - Indigena</option>
+			</select>
+		</div>
+		<div>
+			<label for=etnia_zulia>Etnia del Zulia</label>
+			<select id=etnia_zulia name=etnia_zulia>
+				<option value="1">1 - Wayúu</option>
+				<option value="2">2 - Añú</option>
+				<option value="3">3 - Yukpa</option>
+				<option value="4">4 - Japreria</option>
+				<option value="5">5 - Barí</option>
+				<option value="6">6 - Otro</option>
+			</select>
+		</div>
+		<div>
 			<label for=estado>Estado</label>
-			<select name=estado required>
+			<select id=estado name=estado required>
 				<option value="Amazonas">Amazonas</option>
 				<option value="Anzoategui">Anzoátegui</option>
 				<option value="Apure">Apure</option>
@@ -372,6 +391,145 @@
 		<div>
 			<label for=municipio>Municipio</label>
 			<input name=municipio  required />
+			<select name=municipio disabled style="display:none">
+				<option value="Almirante Padilla">Almirante Padilla</option>
+				<option value="Baralt">Baralt</option>
+				<option value="Cabimas">Cabimas</option>
+				<option value="Catatumbo">Catatumbo</option>
+				<option value="Colón">Colón</option>
+				<option value="Francisco Javier Pulgar">Francisco Javier Pulgar</option>
+				<option value="Guajira">Guajira</option>
+				<option value="Jesús Enrique Lossada">Jesús Enrique Lossada</option>
+				<option value="Jesús María Semprún">Jesús María Semprún</option>
+				<option value="La Cañada de Urdaneta">La Cañada de Urdaneta</option>
+				<option value="Lagunillas">Lagunillas</option>
+				<option value="Machiques de Perijá">Machiques de Perijá</option>
+				<option value="Mara">Mara</option>
+				<option value="Maracaibo">Maracaibo</option>
+				<option value="Miranda">Miranda</option>
+				<option value="Rosario de Perijá">Rosario de Perijá</option>
+				<option value="San Francisco">San Francisco</option>
+				<option value="Santa Rita">Santa Rita</option>
+				<option value="Simón Bolívar">Simón Bolívar</option>
+				<option value="Sucre">Sucre</option>
+				<option value="Valmore Rodríguez">Valmore Rodríguez</option>
+			</select>
+		</div>
+		<div>
+			<label for=parroquia>Parroquia</label>
+			<input name=parroquia  required />
+			<!-- SOURCE: https://es.wikipedia.org/wiki/Anexo:Parroquias_del_estado_Zulia -->
+			<select name=parroquia disabled style="display:none">
+				<option value="Agustín Codazzi">Agustín Codazzi</option>
+				<option value="Alonso de Ojeda">Alonso de Ojeda</option>
+				<option value="Alta Guajira">Alta Guajira</option>
+				<option value="Altagracia">Altagracia</option>
+				<option value="Ambrosio">Ambrosio</option>
+				<option value="Ana María Campos">Ana María Campos</option>
+				<option value="Andrés Bello">Andrés Bello</option>
+				<option value="Antonio Borjas Romero">Antonio Borjas Romero</option>
+				<option value="Arístides Calvani">Arístides Calvani</option>
+				<option value="Bartolomé de las Casas">Bartolomé de las Casas</option>
+				<option value="Barí">Barí</option>
+				<option value="Bobures">Bobures</option>
+				<option value="Bolívar">Bolívar</option>
+				<option value="Cacique Mara">Cacique Mara</option>
+				<option value="Campo Lara">Campo Lara</option>
+				<option value="Carlos Quevedo">Carlos Quevedo</option>
+				<option value="Carmen Herrera">Carmen Herrera</option>
+				<option value="Carracciolo Parra Pérez">Carracciolo Parra Pérez</option>
+				<option value="Cecilio Acosta">Cecilio Acosta</option>
+				<option value="Chinquinquirá">Chinquinquirá</option>
+				<option value="Chiquinquirá">Chiquinquirá</option>
+				<option value="Concepción">Concepción</option>
+				<option value="Coquivacoa">Coquivacoa</option>
+				<option value="Cristo de Aranza">Cristo de Aranza</option>
+				<option value="Domitila Flores">Domitila Flores</option>
+				<option value="Donaldo García">Donaldo García</option>
+				<option value="El Bajo">El Bajo</option>
+				<option value="El Batey">El Batey</option>
+				<option value="El Carmelo">El Carmelo</option>
+				<option value="El Danto">El Danto</option>
+				<option value="El Mene">El Mene</option>
+				<option value="El Rosario">El Rosario</option>
+				<option value="Eleazar López Contreras">Eleazar López Contreras</option>
+				<option value="Elías Sánchez Rubio">Elías Sánchez Rubio</option>
+				<option value="Encontrados">Encontrados</option>
+				<option value="Faría">Faría</option>
+				<option value="Francisco Eugenio Bustamante">Francisco Eugenio Bustamante</option>
+				<option value="Francisco Javier Pulgar">Francisco Javier Pulgar</option>
+				<option value="Francisco Ochoa">Francisco Ochoa</option>
+				<option value="General Urdaneta">General Urdaneta</option>
+				<option value="Germán Ríos Linares">Germán Ríos Linares</option>
+				<option value="Gibraltar">Gibraltar</option>
+				<option value="Guajira">Guajira</option>
+				<option value="Heras">Heras</option>
+				<option value="Idelfonzo Vásquez">Idelfonzo Vásquez</option>
+				<option value="Isla de Toas">Isla de Toas</option>
+				<option value="Jesús María Semprún">Jesús María Semprún</option>
+				<option value="Jorge Hernández">Jorge Hernández</option>
+				<option value="José Cenobio Urribarrí">José Cenobio Urribarrí</option>
+				<option value="José Domingo Rus">José Domingo Rus</option>
+				<option value="José Ramón Yépez">José Ramón Yépez</option>
+				<option value="Juana de Ávila">Juana de Ávila</option>
+				<option value="La Concepción">La Concepción</option>
+				<option value="La Rosa">La Rosa</option>
+				<option value="La Sierrita">La Sierrita</option>
+				<option value="La Victoria">La Victoria</option>
+				<option value="Las Parcelas">Las Parcelas</option>
+				<option value="Libertad">Libertad</option>
+				<option value="Libertad">Libertad</option>
+				<option value="Libertador">Libertador</option>
+				<option value="Los Cortijos">Los Cortijos</option>
+				<option value="Luis De Vicente">Luis De Vicente</option>
+				<option value="Luis Hurtado Higuera">Luis Hurtado Higuera</option>
+				<option value="Manuel Dagnino">Manuel Dagnino</option>
+				<option value="Manuel Guanipa Matos">Manuel Guanipa Matos</option>
+				<option value="Manuel Manrique">Manuel Manrique</option>
+				<option value="Marcelino Briceño">Marcelino Briceño</option>
+				<option value="Marcial Hernández">Marcial Hernández</option>
+				<option value="Mariano Parra León">Mariano Parra León</option>
+				<option value="Monagas ">Monagas </option>
+				<option value="Monseñor Arturo Álvarez">Monseñor Arturo Álvarez</option>
+				<option value="Monseñor Marcos Sergio Godoy">Monseñor Marcos Sergio Godoy</option>
+				<option value="Moralito">Moralito</option>
+				<option value="Olegario Villalobos">Olegario Villalobos</option>
+				<option value="Pedro Lucas Urribarrí">Pedro Lucas Urribarrí</option>
+				<option value="Potreritos">Potreritos</option>
+				<option value="Pueblo Nuevo">Pueblo Nuevo</option>
+				<option value="Punta Gorda">Punta Gorda</option>
+				<option value="Rafael Maria Baralt">Rafael Maria Baralt</option>
+				<option value="Rafael Urdaneta">Rafael Urdaneta</option>
+				<option value="Rafael Urdaneta">Rafael Urdaneta</option>
+				<option value="Raúl Cuenca">Raúl Cuenca</option>
+				<option value="Raúl Leoni">Raúl Leoni</option>
+				<option value="Ricaurte">Ricaurte</option>
+				<option value="Río Negro">Río Negro</option>
+				<option value="Rómulo Betancourt">Rómulo Betancourt</option>
+				<option value="Rómulo Gallegos">Rómulo Gallegos</option>
+				<option value="San Antonio">San Antonio</option>
+				<option value="San Benito">San Benito</option>
+				<option value="San Carlos del Zulia">San Carlos del Zulia</option>
+				<option value="San Francisco">San Francisco</option>
+				<option value="San Isidro">San Isidro</option>
+				<option value="San José de Perijá">San José de Perijá</option>
+				<option value="San José">San José</option>
+				<option value="San José">San José</option>
+				<option value="San Rafael">San Rafael</option>
+				<option value="San Timoteo San Timoteo ">San Timoteo San Timoteo </option>
+				<option value="Santa Bárbara">Santa Bárbara</option>
+				<option value="Santa Cruz del Zulia">Santa Cruz del Zulia</option>
+				<option value="Santa Lucía">Santa Lucía</option>
+				<option value="Santa Rita">Santa Rita</option>
+				<option value="Simón Rodríguez">Simón Rodríguez</option>
+				<option value="Sinamaica">Sinamaica</option>
+				<option value="Sixto Zambrano">Sixto Zambrano</option>
+				<option value="Tamare">Tamare</option>
+				<option value="Udón Pérez">Udón Pérez</option>
+				<option value="Urribarrí">Urribarrí</option>
+				<option value="Venancio Pulgar">Venancio Pulgar</option>
+				<option value="Venezuela">Venezuela</option>
+			</select>
 		</div>
 	</div>
 	<h1>Evaluación Extraoral</h1>
@@ -409,15 +567,15 @@
 		<script>
 			function disable(e) {
 				let option = document.createElement("option")
-				option.value = "N"
-				option.textContent = "N - No Aplica"
+				option.value = "8"
+				option.textContent = "8 - No Aplica"
 				e.appendChild(option)
-				e.value = "N"
+				e.value = "8"
 				e.setAttribute("disabled", "true")
 			}
 			function enable(e) {
 				e.value = "0"
-				null_options = e.querySelectorAll('option[value="N"]')
+				null_options = e.querySelectorAll('option[value="8"]')
 				for (let o of null_options)
 					o.remove()
 				e.removeAttribute("disabled")
@@ -512,7 +670,6 @@
 #}
 	<div class=separator style=background-color:black></div>
 	<h2>Indice de Higiene Bucal Simplificado (IHB-S)</h2>
-	<span class=note>(A partir de los 15 años de edad)</span>
 	<table id=higiene class=small-select>
 		<thead>
 			<th>Diente</th>
@@ -535,7 +692,7 @@
 
 	<div class=separator style=background-color:black></div>
 	<h2>Indice Periodontal de la Comunidad (IPC)</h2>
-	<span class=note>(A partir de los 15 años de edad)</span>
+	<span class=note>(A partir de los 15 años de edad, aplican opciones 3 y 4)</span>
 	{{ tabla_dientes_3_2("peridontico", peridontico, [54, 56, 57, 59]) }}
 	
 	<div class=separator style=background-color:black></div>
@@ -665,7 +822,7 @@
 
 		<div>
 			<label for="relacion_oclusion_1ros_molares">Relación de Oclusión de 1ros Molares Permanentes</label>
-			<span class=note>(Hasta los 3 años)</span>
+			<span class=note>(Desde los 5 años)</span>
 			<select name="relacion_oclusion_1ros_molares" required >
 				<option value=0>0 - Clase I</option>
 				<option value=1>1 - Clase II</option>
@@ -697,7 +854,7 @@
 				<select name="{{x}}" required >
 					{{ presenta() }}
 					{% if x == "diastema" %}
-					<option value="N">N - No Aplica</option>
+					<option value="8">8 - No Aplica</option>
 					{% endif %}
 				</select>
 			</div>
@@ -733,34 +890,84 @@
 	age_ranges = [
 		{query: "#lesion select", min: 5},
 		{query: "#temporomaxilar select", min: 12},
-		{query: 'table[id="higiene"] select', min: 5},
-		{query: 'table[id="peridontico"] select', min: 15},
+		// {query: 'table[id="higiene"] select', min: 5},
+		{query: 'table[id="peridontico"] select', min: 15, action: (x, val) => {
+			for (let o of x.querySelectorAll('option:is([value="3"], [value="4"])')) {
+				if (!val)
+					o.setAttribute("hidden", "true");
+				else
+					o.removeAttribute("hidden");
+			}
+			x.value = 0;
+		}},
 		{query: 'table[id="fijacion"] select', min: 15},
 		{query: '[id="erupcion"] select', min: 5, max: 18},
 		{query: '[name^="protesis_"]', min: 15},
-		{query: '[name="relacion_oclusion_1ros_molares"]', max: 3},
+		{query: '[name="relacion_oclusion_1ros_molares"]', min: 5},
 		{query: '[name="relacion_oclusion_2dos_molares"]', max: 8},
 		{query: '[name="intraoral_flurosis"]', min: 6},
 		{query: '#habitos :is(select, input)', max: 18}
 	]
-	for (let r of age_ranges)
-		for (let el of document.querySelectorAll(r.query))
-			disable(el)
+	for (let range of age_ranges)
+		for (let el of document.querySelectorAll(range.query)) {
+			if (range.hasOwnProperty("action"))
+				range.action(el, false);
+			else
+				disable(el)
+		}
 	document.getElementById("edad").addEventListener("change", (e) => {
+		let in_range = false;
 		for (let range of age_ranges) {
-			if (
+			let in_range = !(
 				(range.hasOwnProperty("min") && e.target.value < range.min)
 				||
 				(range.hasOwnProperty("max") && e.target.value > range.max)
-			) {
-				for (let el of document.querySelectorAll(range.query))
-					disable(el)
-				continue
+			);
+			for (let el of document.querySelectorAll(range.query)) {
+				if (range.hasOwnProperty("action"))
+					range.action(el, in_range)
+				else {
+					if (in_range)
+						enable(el)
+					else
+						disable(el)
+				}
 			}
-			for (let el of document.querySelectorAll(range.query))
-				enable(el)
 		}
 	})
+	document.getElementById("estado").addEventListener("change", e => {
+		// TODO: Hacer municipio/parroquia a div and add/remove child based on estado
+		let zulia = (e.target.value != "Zulia") + 0
+		let types = ["select", "input"]
+		let inputs = {select: [], input: []}
+		for(let type of types)
+			for(let name of ["municipio", "parroquia"])
+				inputs[type].push(document.querySelector(`${type}[name="${name}"]`))
+		let disable = inputs[types[!zulia + 0]], enable = inputs[types[zulia]];
+		for(let x of disable) {
+			x.setAttribute("disabled", "true")
+			x.style.display = "none"
+		}
+		for(let x of enable) {
+			x.removeAttribute("disabled")
+			x.style.display = "inline"
+		}
+	})
+
+	// Logica de las Ednias del Zulia
+	let etnia_zulia = document.getElementById("etnia_zulia")
+	disable(etnia_zulia)
+	for (let id of ["etnia", "estado"]) {
+		let el = document.getElementById(id)
+		el.addEventListener("change", (e) => {
+			let enabled = document.getElementById("etnia").value == 3 && document.getElementById("estado").value == "Zulia"
+			if (enabled)
+				enable(etnia_zulia)
+			else
+				disable(etnia_zulia)
+			return true
+		})
+	}
 </script>
 <script type="text/javascript" src="post.js"></script>
 </body>
